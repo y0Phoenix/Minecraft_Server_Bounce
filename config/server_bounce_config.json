@@ -4,23 +4,23 @@
         "-Xmx6G",
         "-XX:ParallelGCThreads=4"
     ],
-    "restart_duration": 7200,
+    "restart_duration": 1000000,
     "restart_warning_msgs": [
         {
             "msg": "Restarting Server In 30 Minutes...",
-            "time": 30 
+            "time": 120 
         },
         {
             "msg": "Restarting Server In 15 Minutes...",
-            "time": 15
+            "time": 30
         },
         {
             "msg": "Restarting Server In 5 Minutes...",
-            "time": 10
+            "time": 15
         },
         {
             "msg": "Restarting Server In 1 Minutes...",
-            "time": 4
+            "time": 5
         },
         {
             "msg": "Restarting Server In 10 Seconds...",

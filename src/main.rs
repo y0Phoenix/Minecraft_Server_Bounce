@@ -48,8 +48,6 @@ fn main() {
                     // flush the buffer in order to ensure the bytes get pushed to the stdin
                     child.stdin.flush().expect("Error Flushing STD Input Buffer");
 
-                    // reset the timer and set the new duration of it
-                    warning_timer.reset();
                     // set the new duration to the next time instead of the current one
                     if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
                         println!("new timer duration {}", new_durration.time);
@@ -58,6 +56,8 @@ fn main() {
                     else {
                         println!("end of new timers");
                     }
+                    // reset the timer after the new duration is set
+                    warning_timer.reset();
                 }
             }
             // check if the reset timer is ready

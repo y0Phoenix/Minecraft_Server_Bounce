@@ -9,7 +9,7 @@ pub struct Process {
 
 impl Process {
     pub fn new(jar_file: String, args: Args) -> Self {
-        let valid_file = match File::open(jar_file.clone()) {
+        let valid_file = match File::open("server/".to_string() + &jar_file) {
             Ok(_) => true,
             Err(_) => false
         };
