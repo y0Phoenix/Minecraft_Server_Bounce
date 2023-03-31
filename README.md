@@ -17,7 +17,7 @@ config/server_bounce_config.json
 "restart_warning_msgs": [
     {
         "msg": "<your-warning-message-here>",
-        "time_left": 30
+        "time": 30
     }
 ] 
 ```
@@ -29,7 +29,7 @@ run in the terminal. However you can adjust these arguments however you like
 
 The `restart_duration` is the time in `seconds` that need to be elapsed before the server will attempt to restart
 
-THE `restart_warning_msgs` are there so you can send a message to the server whenever the `time_left` is elapsed
+THE `restart_warning_msgs` are there so you can send a message to the server whenever the `time` is elapsed
 
 ### Additional Info
 this program expects your server files to be located in a directory named `server`

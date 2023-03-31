@@ -22,8 +22,8 @@ fn main() {
         let mut warning_msgs = config_data.restart_warning_msgs.iter();
 
         // create two timers one for the reset duration and the other for the warning messages
-        println!("creating new warning timer for {} millis", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time_left * 1000);
-        let mut warning_timer = Timer::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time_left * 1000);
+        println!("creating new warning timer for {} millis", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
+        let mut warning_timer = Timer::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
         println!("creating new restart timer for {} millis", config_data.restart_duration * 1000);
         let mut reset_timer = Timer::from_millis(config_data.restart_duration * 1000);
 
@@ -50,7 +50,8 @@ fn main() {
 
                     // reset the timer and set the new duration of it
                     warning_timer.reset();
-                    warning_timer.duration = Duration::from_secs(current_msg.time_left);
+                    println!("new timer duration {}", current_msg.time);
+                    warning_timer.duration = Duration::from_secs(current_msg.time);
                 }
             }
             // check if the reset timer is ready

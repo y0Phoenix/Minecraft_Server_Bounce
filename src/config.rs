@@ -24,7 +24,7 @@ impl Config {
 #[derive(Serialize, Deserialize)]
 pub struct RestartWarning {
     pub msg: String,
-    pub time_left: u64
+    pub time: u64
 }
 
 pub type Args = Vec<String>;
