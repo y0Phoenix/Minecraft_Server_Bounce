@@ -9,7 +9,7 @@ mod config;
 mod process;
 
 fn main() {
-    let config_data = Config::read("config/config.json");
+    let config_data = Config::read("config/server_bounce_config.json");
     
     let mut instant = Instant::now();
     

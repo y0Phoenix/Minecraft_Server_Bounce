@@ -12,7 +12,7 @@ impl Config {
     pub fn read<P>(path: P) -> Self 
         where P: AsRef<Path> + std::fmt::Display
         {
-        let config_data = read_to_string(path).expect(format!("Failed To Read Config File").as_str());
+        let config_data = read_to_string(path).expect("Failed To Read Config File. Make Sure You Have `config/server_bounce_config.json` in your root directory");
 
         let config_data = serde_json::from_str::<Config>(&config_data.as_str()).expect("Failed To Parse Data From Config File. Possibly Invalid Syntax");
 
