@@ -1,12 +1,14 @@
 use std::{io::{BufWriter, Write}, process::{ChildStdin, Child, Command, Stdio}, time::Duration, thread, fs::File};
 
+use crate::config::Args;
+
 pub struct Process {
     pub process: Child,
     pub stdin: BufWriter<ChildStdin>
 }
 
 impl Process {
-    pub fn new(jar_file: String) -> Self {
+    pub fn new(jar_file: String, args: Args) -> Self {
         let valid_file = match File::open(jar_file.clone()) {
             Ok(_) => true,
             Err(_) => false
@@ -17,15 +19,15 @@ impl Process {
         }
 
         let mut process = Command::new("java")
-            .current_dir("fabric minecraft server")
-            .arg("-Xmx2G")
+            .current_dir("server")
+            .args(args)
             .arg("-jar")
             .arg(jar_file)
             .stdin(Stdio::piped())
             .spawn()
             .expect("Failed to start java process")
         ;
-    
+
         let stdin = BufWriter::new(process.stdin.take().expect("Failed To Aquire STD Input for Child Process"));
 
         Self {

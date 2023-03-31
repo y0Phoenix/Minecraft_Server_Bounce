@@ -1,5 +1,9 @@
 {
     "jar_file_name": "fabric-server.jar",
+    "java_args": [
+        "-Xmx6G",
+        "-XX:ParallelGCThreads=4"
+    ],
     "restart_duration": 45,
     "restart_warning_msgs": [
         {

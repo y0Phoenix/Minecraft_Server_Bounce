@@ -5,7 +5,8 @@ use serde::{Serialize, Deserialize};
 pub struct Config {
     pub restart_duration: u64,
     pub restart_warning_msgs: Vec<RestartWarning>,
-    pub jar_file_name: String
+    pub jar_file_name: String,
+    pub java_args: Args
 }
 
 impl Config {
@@ -25,3 +26,5 @@ pub struct RestartWarning {
     pub msg: String,
     pub time_left: u64
 }
+
+pub type Args = Vec<String>;
