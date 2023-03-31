@@ -33,3 +33,6 @@ THE `restart_warning_msgs` are there so you can send a message to the server whe
 
 ### Additional Info
 this program expects your server files to be located in a directory named `server`
+
+if your trying to get the warning messages timed down to the second from the `restart_duration` try adding 2-4 extra seconds to the `restart_duration`. 
+there are some inconsistencies with the timer.
