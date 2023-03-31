@@ -4,7 +4,7 @@
         "-Xmx6G",
         "-XX:ParallelGCThreads=4"
     ],
-    "restart_duration": 45,
+    "restart_duration": 7200,
     "restart_warning_msgs": [
         {
             "msg": "Restarting Server In 30 Minutes...",

@@ -19,7 +19,7 @@ fn main() {
         let mut child = Process::new(config_data.jar_file_name.clone(), config_data.java_args.clone());
 
         // create an iterator over the config warning msgs
-        let mut warning_msgs = config_data.restart_warning_msgs.iter();
+        let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();
 
         // create two timers one for the reset duration and the other for the warning messages
         println!("creating new warning timer for {} millis", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
@@ -39,9 +39,9 @@ fn main() {
 
             // check if we are ready to send a warning message
             if warning_timer.ready {
-                println!("warning timer ready");
                 // grab the next warning message from the iterator
                 if let Some(current_msg) = warning_msgs.next() {
+                    let (i, current_msg) = current_msg;
                     println!("sending /say {}", current_msg.msg);
                     // write the msg to the sdtin buffer
                     child.stdin.write_all(format!("/say {}\n", current_msg.msg).as_bytes()).expect("Error Writing To STD Input Buffer");
@@ -50,8 +50,14 @@ fn main() {
 
                     // reset the timer and set the new duration of it
                     warning_timer.reset();
-                    println!("new timer duration {}", current_msg.time);
-                    warning_timer.duration = Duration::from_secs(current_msg.time);
+                    // set the new duration to the next time instead of the current one
+                    if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
+                        println!("new timer duration {}", new_durration.time);
+                        warning_timer.duration = Duration::from_secs(new_durration.time);
+                    }
+                    else {
+                        println!("end of new timers");
+                    }
                 }
             }
             // check if the reset timer is ready
