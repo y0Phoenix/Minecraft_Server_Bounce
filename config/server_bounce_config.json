@@ -1,0 +1,66 @@
+{
+    "jar_file_name": "fabric-server.jar",
+    "java_args": [
+        "-Xmx6G",
+        "-XX:ParallelGCThreads=4"
+    ],
+    "restart_duration": 1000000,
+    "restart_warning_msgs": [
+        {
+            "msg": "Restarting Server In 30 Minutes...",
+            "time": 120 
+        },
+        {
+            "msg": "Restarting Server In 15 Minutes...",
+            "time": 30
+        },
+        {
+            "msg": "Restarting Server In 5 Minutes...",
+            "time": 15
+        },
+        {
+            "msg": "Restarting Server In 1 Minutes...",
+            "time": 5
+        },
+        {
+            "msg": "Restarting Server In 10 Seconds...",
+            "time": 2
+        },
+        {
+            "msg": "Restarting Server In 9 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 8 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 7 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 6 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 5 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 4 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 3 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 2 Seconds...",
+            "time": 1
+        },
+        {
+            "msg": "Restarting Server In 1 Seconds...",
+            "time": 1
+        }
+    ]
+}
