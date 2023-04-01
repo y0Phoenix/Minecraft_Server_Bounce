@@ -1,1 +1,3 @@
 git pull
+
+echo "poop"
