@@ -8,7 +8,7 @@ pub struct Process {
 }
 
 impl Process {
-    pub fn new(jar_file: String, args: Args) -> Self {
+    pub fn new(jar_file: String, args: Args, nogui: bool) -> Self {
         let valid_file = match File::open("server/".to_string() + &jar_file) {
             Ok(_) => true,
             Err(_) => false
@@ -23,6 +23,7 @@ impl Process {
             .args(args)
             .arg("-jar")
             .arg(jar_file)
+            .arg(if nogui {"nogui"} else {""})
             .stdin(Stdio::piped())
             .spawn()
             .expect("Failed to start java process")
@@ -48,5 +49,12 @@ impl Process {
             },
             _ => {}
         }
+    }
+
+    pub fn stdin_write(&mut self, input: String) {
+        // write the msg to the sdtin buffer
+        self.stdin.write_all(format!("{}\n", input).as_bytes()).expect("Error Writing To STD Input Buffer");
+        // flush the buffer in order to ensure the bytes get pushed to the stdin
+        self.stdin.flush().expect("Error Flushing STD Input Buffer");
     }
 }

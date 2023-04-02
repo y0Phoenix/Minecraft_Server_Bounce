@@ -1,5 +1,5 @@
-[15:12:58] [main/INFO]: Loading Minecraft 1.19.3 with Fabric Loader 0.14.18
-[15:12:58] [main/INFO]: Loading 43 mods:
+[01:26:40] [main/INFO]: Loading Minecraft 1.19.3 with Fabric Loader 0.14.18
+[01:26:40] [main/INFO]: Loading 43 mods:
 	- bclib 2.2.4
 	- betterend 3.1.2
 	- fabric-api 0.76.0+1.19.3
@@ -55,118 +55,105 @@
 	- fabricloader 0.14.18
 	- java 17
 	- minecraft 1.19.3
-[15:12:58] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/Users/aarongraybill/my_programs/Minecraft_Server_Bounce/server/libraries/net/fabricmc/sponge-mixin/0.12.4+mixin.0.8.5/sponge-mixin-0.12.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
-[15:12:58] [main/INFO]: Compatibility level set to JAVA_17
-[15:13:00] [main/INFO]: Building unoptimized datafixer
-[15:13:00] [main/INFO]: [bclib] Added Config bclib.generator to auto sync (file hash)
-[15:13:00] [main/INFO]: [bclib] Added Config bclib.main to auto sync (content diff)
-[15:13:00] [main/INFO]: [bclib] Added Config bclib.recipes to auto sync (file hash)
-[15:13:00] [main/INFO]: [bclib] Added Config bclib.biomes to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.entities to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.blocks to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.items to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.biomes to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.recipes to auto sync (file hash)
-[15:13:01] [main/INFO]: [bclib] Added Config betterend.enchantments to auto sync (file hash)
-[15:13:04] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[15:13:05] [main/INFO]: [bclib] Running Pre Patchers on ./world/.
-[15:13:05] [main/INFO]: [DataFixerAPI] Everything up to date
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (314dcc3b)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[15:13:05] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[15:13:05] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (38696f0c)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (66727ed6)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[15:13:05] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[15:13:05] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (7e156063)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (37e7166f)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[15:13:05] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[15:13:05] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (20032a8)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (760f3970)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[15:13:05] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[15:13:05] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[15:13:05] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (6f9454c9)
-[15:13:05] [main/INFO]: [bclib] Unable to build Biome List yet
-[15:13:05] [main/WARN]: [bclib] No valid Biome Registry available!
-[15:13:05] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[15:13:05] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[15:13:05] [main/ERROR]: [worlds_together] No valid registry found!
-[15:13:05] [main/INFO]: [bclib] Found World without generator Settings. Setting up data...
-[15:13:05] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[15:13:05] [main/ERROR]: [worlds_together] No valid registry found!
-[15:13:05] [main/ERROR]: [bclib] Failed to set world to BiomeSource Version ResourceKey[minecraft:worldgen/world_preset / bclib:normal]
-[15:13:05] [main/INFO]: [fabric-registry-sync] Loaded registry data [file 1/4]
-[15:13:05] [main/INFO]: Loaded 7 recipes
-[15:13:06] [main/INFO]: Loaded 1856 advancements
-[15:13:06] [main/INFO]: Applied 0 biome modifications to 0 of 88 new biomes in 837.2 μs
-[15:13:06] [Server thread/INFO]: Starting minecraft server version 1.19.3
-[15:13:06] [Server thread/INFO]: Loading properties
-[15:13:06] [Server thread/INFO]: Default game type: SURVIVAL
-[15:13:06] [Server thread/INFO]: Generating keypair
-[15:13:06] [Server thread/INFO]: Starting Minecraft server on *:25565
-[15:13:06] [Server thread/INFO]: Using default channel type
-[15:13:07] [Server thread/INFO]: Preparing level "world"
-[15:13:07] [Server thread/INFO]: [bclib] 
-Apply Modifications for minecraft:the_nether
-    class_4766 (5bb4e21a)
-        biomes     = 5
-        namespaces = minecraft
-[15:13:07] [Server thread/INFO]: [bclib] 
-Apply Modifications for minecraft:the_end
-    class_2169 (4d2b4747)
-        biomes     = 5
-        namespaces = minecraft
-[15:13:07] [Server thread/INFO]: [bclib] 
+[01:26:40] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/Users/aarongraybill/my_programs/Minecraft_Server/server/libraries/net/fabricmc/sponge-mixin/0.12.4+mixin.0.8.5/sponge-mixin-0.12.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
+[01:26:40] [main/INFO]: Compatibility level set to JAVA_17
+[01:26:42] [main/INFO]: Building unoptimized datafixer
+[01:26:43] [main/INFO]: [bclib] Added Config bclib.generator to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config bclib.main to auto sync (content diff)
+[01:26:43] [main/INFO]: [bclib] Added Config bclib.recipes to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config bclib.biomes to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.entities to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.blocks to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.items to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.biomes to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.recipes to auto sync (file hash)
+[01:26:43] [main/INFO]: [bclib] Added Config betterend.enchantments to auto sync (file hash)
+[01:26:47] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[01:26:47] [main/INFO]: [bclib] Running Pre Patchers on ./world/.
+[01:26:47] [main/INFO]: [DataFixerAPI] Everything up to date
+[01:26:47] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (25d9217c)
+[01:26:47] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:47] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[01:26:47] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[01:26:47] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[01:26:47] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (1ad32498)
+[01:26:47] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:47] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (1f1cae5c)
+[01:26:47] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:47] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[01:26:47] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[01:26:47] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[01:26:47] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (1ca3258d)
+[01:26:47] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:48] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (c8dceb0)
+[01:26:48] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:48] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[01:26:48] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[01:26:48] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[01:26:48] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (75438afa)
+[01:26:48] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:48] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (ddb1912)
+[01:26:48] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:48] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[01:26:48] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[01:26:48] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[01:26:48] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (20032a8)
+[01:26:48] [main/INFO]: [bclib] Unable to build Biome List yet
+[01:26:48] [main/WARN]: [bclib] No valid Biome Registry available!
+[01:26:48] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[01:26:48] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[01:26:48] [main/ERROR]: [worlds_together] No valid registry found!
+[01:26:48] [main/INFO]: [bclib] Found World without generator Settings. Setting up data...
+[01:26:48] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[01:26:48] [main/ERROR]: [worlds_together] No valid registry found!
+[01:26:48] [main/ERROR]: [bclib] Failed to set world to BiomeSource Version ResourceKey[minecraft:worldgen/world_preset / bclib:normal]
+[01:26:48] [main/INFO]: [fabric-registry-sync] Loaded registry data [file 1/4]
+[01:26:48] [main/INFO]: Loaded 7 recipes
+[01:26:48] [main/INFO]: Loaded 1856 advancements
+[01:26:49] [main/INFO]: Applied 0 biome modifications to 0 of 88 new biomes in 665.2 μs
+[01:26:49] [Server thread/INFO]: Starting minecraft server version 1.19.3
+[01:26:49] [Server thread/INFO]: Loading properties
+[01:26:49] [Server thread/INFO]: Default game type: SURVIVAL
+[01:26:49] [Server thread/INFO]: Generating keypair
+[01:26:49] [Server thread/INFO]: Starting Minecraft server on *:25565
+[01:26:49] [Server thread/INFO]: Using default channel type
+[01:26:49] [Server thread/INFO]: Preparing level "world"
+[01:26:49] [Server thread/INFO]: [bclib] 
 Apply Modifications for minecraft:overworld
-    class_4766 (58488b68)
+    class_4766 (17f54734)
         biomes     = 52
         namespaces = minecraft
-[15:13:07] [Server thread/INFO]: [bclib] World Dimensions: 
+[01:26:49] [Server thread/INFO]: [bclib] 
+Apply Modifications for minecraft:the_nether
+    class_4766 (43c61d87)
+        biomes     = 5
+        namespaces = minecraft
+[01:26:49] [Server thread/INFO]: [bclib] 
+Apply Modifications for minecraft:the_end
+    class_2169 (1d11237)
+        biomes     = 5
+        namespaces = minecraft
+[01:26:49] [Server thread/INFO]: [bclib] World Dimensions: 
+ - minecraft:overworld: 
+     net.minecraft.class_3754@38d7ffcc 
+     class_4766 (17f54734)
+         biomes     = 52
+         namespaces = minecraft
  - minecraft:the_nether: 
-     net.minecraft.class_3754@4ade9b78 
-     class_4766 (5bb4e21a)
+     net.minecraft.class_3754@752373b2 
+     class_4766 (43c61d87)
          biomes     = 5
          namespaces = minecraft
  - minecraft:the_end: 
-     net.minecraft.class_3754@5979ecce 
-     class_2169 (4d2b4747)
+     net.minecraft.class_3754@2a78b591 
+     class_2169 (1d11237)
          biomes     = 5
          namespaces = minecraft
- - minecraft:overworld: 
-     net.minecraft.class_3754@71825a32 
-     class_4766 (58488b68)
-         biomes     = 52
-         namespaces = minecraft
-[15:13:07] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[15:13:08] [Worker-Main-8/INFO]: Preparing spawn area: 0%
-[15:13:08] [Worker-Main-8/INFO]: Preparing spawn area: 0%
-[15:13:08] [Worker-Main-8/INFO]: Preparing spawn area: 0%
-[15:13:09] [Worker-Main-9/INFO]: Preparing spawn area: 75%
-[15:13:09] [Server thread/INFO]: Time elapsed: 1598 ms
-[15:13:09] [Server thread/INFO]: Done (2.210s)! For help, type "help"
-[15:14:57] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 30 Minutes...
-[15:15:28] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 15 Minutes...
-[15:15:43] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 5 Minutes...
-[15:15:48] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 1 Minutes...
-[15:15:50] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 10 Seconds...
-[15:15:51] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 9 Seconds...
-[15:15:52] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 8 Seconds...
-[15:15:53] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 7 Seconds...
-[15:15:54] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 6 Seconds...
-[15:15:55] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 5 Seconds...
-[15:15:56] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 4 Seconds...
-[15:15:57] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 3 Seconds...
-[15:15:58] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 2 Seconds...
-[15:15:59] [Server thread/INFO]: [Not Secure] [Server] Restarting Server In 1 Seconds...
+[01:26:49] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[01:26:51] [Worker-Main-5/INFO]: Preparing spawn area: 0%
+[01:26:51] [Worker-Main-5/INFO]: Preparing spawn area: 0%
+[01:26:51] [Worker-Main-5/INFO]: Preparing spawn area: 0%
+[01:26:51] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[01:26:51] [Worker-Main-8/INFO]: Preparing spawn area: 85%
+[01:26:51] [Server thread/INFO]: Time elapsed: 2056 ms
+[01:26:51] [Server thread/INFO]: Done (2.653s)! For help, type "help"

@@ -4,6 +4,7 @@
         "-Xmx6G",
         "-XX:ParallelGCThreads=4"
     ],
+    "nogui": true,
     "restart_duration": 1000000,
     "restart_warning_msgs": [
         {
