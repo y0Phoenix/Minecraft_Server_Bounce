@@ -1,8 +1,19 @@
 {
     "jar_file_name": "fabric-server.jar",
     "java_args": [
-        "-Xmx8G",
-        "-XX:ParallelGCThreads=8"
+        "-Xmx4G",
+	"-Xms4G",
+	"-XX:+AlwaysPreTouch",
+	"-XX:+DisableExplicitGC",
+	"-XX:+UseG1GC",
+	"-XX:+UnlockExperimentalVMOptions",
+	"-XX:MaxGCPauseMillis=50",
+	"-XX:G1HeapRegionSize=4M",
+	"-XX:TargetSurvivorRatio=90",
+	"-XX:G1NewSizePercent=50",
+	"-XX:G1MaxNewSizePercent=80",
+	"-XX:InitiatingHeapOccupancyPercent=10",
+	"-XX:G1MixedGCLiveThresholdPercent=50"
     ],
     "restart_duration": 7202,
     "restart_warning_msgs": [
