@@ -1,4 +1,4 @@
-use std::{io::{BufWriter, Write}, process::{ChildStdin, Child, Command, Stdio}, time::Duration, thread, fs::File};
+use std::{io::{BufWriter, Write}, process::{ChildStdin, Child, Command, Stdio}, time::Duration, thread, fs::File, env};
 
 use crate::config::Args;
 
@@ -18,8 +18,13 @@ impl Process {
             eprintln!("Error Accessing {} Check Config For `jar_file_name`", jar_file.clone());
         }
 
+        let production = match env::var("PRODUCTION") {
+            Ok(str) => str.as_str().parse::<bool>().expect("Error: Invalid Environment Variable PRODUCTION"),
+            Err(_) => false
+        };
+
         let mut process = Command::new("java")
-            .current_dir("server")
+            .current_dir(if production {"server"} else {"debug server"})
             .args(args)
             .arg("-jar")
             .arg(jar_file)

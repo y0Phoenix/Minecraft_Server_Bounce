@@ -18,6 +18,8 @@ pub enum AppState {
 }
 
 fn main() {
+    dotenv::dotenv().ok();
+
     let config_data = Config::read("config/server_bounce_config.json");
     
     let mut instant = Instant::now();

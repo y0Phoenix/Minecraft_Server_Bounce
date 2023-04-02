@@ -1,0 +1,9 @@
+if having merge conflicts with the cloud for the server folder just run this
+
+git checkout --theirs server/*
+
+this will make it so all changes from the cloud are accepted and the local ones are thrown away
+
+if you need to accept local changes instead of the clouds use this
+
+git checkout --ours server/*
