@@ -1,5 +1,5 @@
-[23:57:56] [main/INFO]: Loading Minecraft 1.19.3 with Fabric Loader 0.14.18
-[23:57:57] [main/INFO]: Loading 43 mods:
+[20:47:36] [main/INFO]: Loading Minecraft 1.19.3 with Fabric Loader 0.14.18
+[20:47:36] [main/INFO]: Loading 43 mods:
 	- bclib 2.2.4
 	- betterend 3.1.2
 	- fabric-api 0.76.0+1.19.3
@@ -55,135 +55,136 @@
 	- fabricloader 0.14.18
 	- java 20
 	- minecraft 1.19.3
-[23:57:57] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/choos/Desktop/minecraft%20servers/Minecraft_Server/server/libraries/net/fabricmc/sponge-mixin/0.12.4+mixin.0.8.5/sponge-mixin-0.12.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
-[23:57:57] [main/INFO]: Compatibility level set to JAVA_17
-[23:58:02] [main/INFO]: Building unoptimized datafixer
-[23:58:04] [main/INFO]: [bclib] Added Config bclib.generator to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config bclib.main to auto sync (content diff)
-[23:58:04] [main/INFO]: [bclib] Added Config bclib.recipes to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config bclib.biomes to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.entities to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.blocks to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.items to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.biomes to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.recipes to auto sync (file hash)
-[23:58:04] [main/INFO]: [bclib] Added Config betterend.enchantments to auto sync (file hash)
-[23:58:12] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
-[23:58:12] [main/INFO]: [bclib] Running Pre Patchers on .\world\.
-[23:58:12] [main/INFO]: [DataFixerAPI] Everything up to date
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (3dd37a15)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[23:58:13] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[23:58:13] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (186c885c)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (78e7a484)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[23:58:13] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[23:58:13] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (128ac91a)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (44712113)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[23:58:13] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[23:58:13] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (1e027a86)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (b904390)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
-[23:58:13] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
-[23:58:13] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
-[23:58:13] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (51bca7ab)
-[23:58:13] [main/INFO]: [bclib] Unable to build Biome List yet
-[23:58:13] [main/WARN]: [bclib] No valid Biome Registry available!
-[23:58:13] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[23:58:13] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[23:58:13] [main/ERROR]: [worlds_together] No valid registry found!
-[23:58:13] [main/INFO]: [bclib] Found World without generator Settings. Setting up data...
-[23:58:13] [main/ERROR]: [worlds_together] Tried to read from global registry!
-[23:58:13] [main/ERROR]: [worlds_together] No valid registry found!
-[23:58:13] [main/ERROR]: [bclib] Failed to set world to BiomeSource Version ResourceKey[minecraft:worldgen/world_preset / bclib:normal]
-[23:58:13] [main/INFO]: [fabric-registry-sync] Loaded registry data [file 1/4]
-[23:58:14] [main/INFO]: Loaded 7 recipes
-[23:58:14] [main/INFO]: Loaded 1856 advancements
-[23:58:15] [main/INFO]: Applied 0 biome modifications to 0 of 88 new biomes in 1.457 ms
-[23:58:15] [Server thread/INFO]: Starting minecraft server version 1.19.3
-[23:58:15] [Server thread/INFO]: Loading properties
-[23:58:15] [Server thread/INFO]: Default game type: SURVIVAL
-[23:58:15] [Server thread/INFO]: Generating keypair
-[23:58:15] [Server thread/INFO]: Starting Minecraft server on *:25565
-[23:58:15] [Server thread/INFO]: Using default channel type
-[23:58:16] [Server thread/INFO]: Preparing level "world"
-[23:58:16] [Server thread/INFO]: [bclib] 
+[20:47:36] [main/INFO]: SpongePowered MIXIN Subsystem Version=0.8.5 Source=file:/C:/Users/choos/Desktop/minecraft%20servers/gamer%20lounge%20new/server/libraries/net/fabricmc/sponge-mixin/0.12.4+mixin.0.8.5/sponge-mixin-0.12.4+mixin.0.8.5.jar Service=Knot/Fabric Env=SERVER
+[20:47:36] [main/INFO]: Compatibility level set to JAVA_17
+[20:47:42] [main/INFO]: Building unoptimized datafixer
+[20:47:44] [main/INFO]: [bclib] Added Config bclib.generator to auto sync (file hash)
+[20:47:44] [main/INFO]: [bclib] Added Config bclib.main to auto sync (content diff)
+[20:47:44] [main/INFO]: [bclib] Added Config bclib.recipes to auto sync (file hash)
+[20:47:44] [main/INFO]: [bclib] Added Config bclib.biomes to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.entities to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.blocks to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.items to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.biomes to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.recipes to auto sync (file hash)
+[20:47:45] [main/INFO]: [bclib] Added Config betterend.enchantments to auto sync (file hash)
+[20:47:53] [main/INFO]: Environment: authHost='https://authserver.mojang.com', accountsHost='https://api.mojang.com', sessionHost='https://sessionserver.mojang.com', servicesHost='https://api.minecraftservices.com', name='PROD'
+[20:47:53] [main/INFO]: [bclib] Running Pre Patchers on .\world\.
+[20:47:53] [main/INFO]: [DataFixerAPI] Everything up to date
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (3dd37a15)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[20:47:54] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[20:47:54] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (186c885c)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (78e7a484)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[20:47:54] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[20:47:54] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (128ac91a)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (44712113)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[20:47:54] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[20:47:54] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (1e027a86)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - The End  BiomeSource (b904390)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/INFO]: [bclib] No Void Biomes found. Disabling by using barrens
+[20:47:54] [main/INFO]: [bclib] No Barrens Biomes found. Disabling by using land Biomes
+[20:47:54] [main/WARN]: [bclib] No Center Island Biomes found. Forcing use of vanilla center.
+[20:47:54] [main/INFO]: [bclib] Updating Pickers for BCLib - Nether BiomeSource (51bca7ab)
+[20:47:54] [main/INFO]: [bclib] Unable to build Biome List yet
+[20:47:54] [main/WARN]: [bclib] No valid Biome Registry available!
+[20:47:54] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[20:47:54] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[20:47:54] [main/ERROR]: [worlds_together] No valid registry found!
+[20:47:54] [main/INFO]: [bclib] Found World without generator Settings. Setting up data...
+[20:47:54] [main/ERROR]: [worlds_together] Tried to read from global registry!
+[20:47:54] [main/ERROR]: [worlds_together] No valid registry found!
+[20:47:54] [main/ERROR]: [bclib] Failed to set world to BiomeSource Version ResourceKey[minecraft:worldgen/world_preset / bclib:normal]
+[20:47:54] [main/INFO]: [fabric-registry-sync] Loaded registry data [file 1/4]
+[20:47:55] [main/INFO]: Loaded 7 recipes
+[20:47:55] [main/INFO]: Loaded 1856 advancements
+[20:47:56] [main/INFO]: Applied 0 biome modifications to 0 of 88 new biomes in 2.992 ms
+[20:47:56] [Server thread/INFO]: Starting minecraft server version 1.19.3
+[20:47:56] [Server thread/INFO]: Loading properties
+[20:47:56] [Server thread/INFO]: Default game type: SURVIVAL
+[20:47:57] [Server thread/INFO]: Generating keypair
+[20:47:57] [Server thread/INFO]: Starting Minecraft server on *:25565
+[20:47:57] [Server thread/INFO]: Using default channel type
+[20:47:57] [Server thread/INFO]: Preparing level "world"
+[20:47:57] [Server thread/INFO]: [bclib] 
 Apply Modifications for minecraft:the_end
-    class_2169 (7fca793f)
+    class_2169 (46d23afb)
         biomes     = 5
         namespaces = minecraft
-[23:58:16] [Server thread/INFO]: [bclib] 
+[20:47:57] [Server thread/INFO]: [bclib] 
 Apply Modifications for minecraft:the_nether
-    class_4766 (47f2fc36)
+    class_4766 (2d685aa0)
         biomes     = 5
         namespaces = minecraft
-[23:58:16] [Server thread/INFO]: [bclib] 
+[20:47:57] [Server thread/INFO]: [bclib] 
 Apply Modifications for minecraft:overworld
-    class_4766 (66c6fef1)
+    class_4766 (72b4c6df)
         biomes     = 52
         namespaces = minecraft
-[23:58:16] [Server thread/INFO]: [bclib] World Dimensions: 
+[20:47:57] [Server thread/INFO]: [bclib] World Dimensions: 
  - minecraft:the_end: 
-     net.minecraft.class_3754@58336c68 
-     class_2169 (7fca793f)
+     net.minecraft.class_3754@48508246 
+     class_2169 (46d23afb)
          biomes     = 5
          namespaces = minecraft
  - minecraft:the_nether: 
-     net.minecraft.class_3754@5e6947b 
-     class_4766 (47f2fc36)
+     net.minecraft.class_3754@6525485c 
+     class_4766 (2d685aa0)
          biomes     = 5
          namespaces = minecraft
  - minecraft:overworld: 
-     net.minecraft.class_3754@25d58e6d 
-     class_4766 (66c6fef1)
+     net.minecraft.class_3754@3e3a287d 
+     class_4766 (72b4c6df)
          biomes     = 52
          namespaces = minecraft
-[23:58:17] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
-[23:58:19] [Worker-Main-9/INFO]: Preparing spawn area: 0%
-[23:58:19] [Worker-Main-11/INFO]: Preparing spawn area: 0%
-[23:58:19] [Worker-Main-2/INFO]: Preparing spawn area: 0%
-[23:58:19] [Worker-Main-2/INFO]: Preparing spawn area: 0%
-[23:58:19] [Worker-Main-11/INFO]: Preparing spawn area: 0%
-[23:58:19] [Worker-Main-6/INFO]: Preparing spawn area: 0%
-[23:58:20] [Worker-Main-10/INFO]: Preparing spawn area: 41%
-[23:58:20] [Server thread/INFO]: Time elapsed: 3393 ms
-[23:58:20] [Server thread/INFO]: Done (4.638s)! For help, type "help"
-[23:58:24] [User Authenticator #1/INFO]: UUID of player y0_Phoenix is 0de74123-5f62-400a-baf0-958bab39bc2f
-[23:58:24] [Server thread/INFO]: y0_Phoenix[/192.168.1.1:58155] logged in with entity id 91 at (-5852.743770839227, 62.07326432466506, -892.9053401818175)
-[23:58:24] [Server thread/INFO]: y0_Phoenix joined the game
-[23:58:26] [Server thread/INFO]: [bclib] Received Hello from Client. (server=2.2.4, client=2.2.4)
-[23:58:26] [Server thread/INFO]: [bclib] Sending Hello to Client. (server=2.2.4)
-[23:58:26] [Server thread/INFO]: [bclib] 	- Listing Mod bclib v2.2.4 (size: 1981.7 KiB, download=true)
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.generator
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.main
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.recipes
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.biomes
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.entities
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.blocks
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.items
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.recipes
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.enchantments
-[23:58:26] [Server thread/INFO]: [bclib] 	- Offering Folder C:\Users\choos\Desktop\minecraft servers\Minecraft_Server\server\bclib-sync (allowDelete=true)
-[23:58:34] [Server thread/INFO]: y0_Phoenix lost connection: Disconnected
-[23:58:34] [Server thread/INFO]: y0_Phoenix left the game
-[23:58:38] [Server thread/INFO]: Stopping server
-[23:58:38] [Server thread/INFO]: Saving players
-[23:58:38] [Server thread/INFO]: Saving worlds
-[23:58:39] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
-[23:58:39] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
-[23:58:39] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
-[23:58:39] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
-[23:58:39] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
-[23:58:39] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
-[23:58:39] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
+[20:47:58] [Server thread/INFO]: Preparing start region for dimension minecraft:overworld
+[20:48:00] [Worker-Main-10/INFO]: Preparing spawn area: 0%
+[20:48:00] [Worker-Main-10/INFO]: Preparing spawn area: 0%
+[20:48:00] [Worker-Main-6/INFO]: Preparing spawn area: 0%
+[20:48:00] [Worker-Main-11/INFO]: Preparing spawn area: 0%
+[20:48:00] [Worker-Main-3/INFO]: Preparing spawn area: 0%
+[20:48:01] [Worker-Main-10/INFO]: Preparing spawn area: 0%
+[20:48:01] [Worker-Main-6/INFO]: Preparing spawn area: 4%
+[20:48:02] [Worker-Main-1/INFO]: Preparing spawn area: 84%
+[20:48:02] [Server thread/INFO]: Time elapsed: 3688 ms
+[20:48:02] [Server thread/INFO]: Done (4.875s)! For help, type "help"
+[20:52:38] [User Authenticator #1/INFO]: UUID of player y0_Phoenix is 0de74123-5f62-400a-baf0-958bab39bc2f
+[20:52:39] [Server thread/INFO]: y0_Phoenix[/192.168.1.107:55140] logged in with entity id 91 at (-5852.743770839227, 62.07326432466506, -892.9053401818175)
+[20:52:39] [Server thread/INFO]: y0_Phoenix joined the game
+[20:52:40] [Server thread/INFO]: [bclib] Received Hello from Client. (server=2.2.4, client=2.2.4)
+[20:52:40] [Server thread/INFO]: [bclib] Sending Hello to Client. (server=2.2.4)
+[20:52:40] [Server thread/INFO]: [bclib] 	- Listing Mod bclib v2.2.4 (size: 1981.7 KiB, download=true)
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.generator
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.main
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.recipes
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_bclib.biomes
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.entities
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.blocks
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.items
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.recipes
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Config bclib.CONFIG_betterend.enchantments
+[20:52:40] [Server thread/INFO]: [bclib] 	- Offering Folder C:\Users\choos\Desktop\minecraft servers\gamer lounge new\server\bclib-sync (allowDelete=true)
+[20:52:50] [Server thread/INFO]: y0_Phoenix lost connection: Disconnected
+[20:52:50] [Server thread/INFO]: y0_Phoenix left the game
+[20:52:59] [Server thread/INFO]: Stopping server
+[20:52:59] [Server thread/INFO]: Saving players
+[20:52:59] [Server thread/INFO]: Saving worlds
+[20:52:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:overworld
+[20:52:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_end
+[20:52:59] [Server thread/INFO]: Saving chunks for level 'ServerLevel[world]'/minecraft:the_nether
+[20:52:59] [Server thread/INFO]: ThreadedAnvilChunkStorage (world): All chunks are saved
+[20:52:59] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM1): All chunks are saved
+[20:52:59] [Server thread/INFO]: ThreadedAnvilChunkStorage (DIM-1): All chunks are saved
+[20:52:59] [Server thread/INFO]: ThreadedAnvilChunkStorage: All dimensions are saved
