@@ -58,7 +58,7 @@ impl Process {
 
     pub fn stdin_write(&mut self, input: String) {
         // write the msg to the sdtin buffer
-        self.stdin.write_all(format!("{}\n", input).as_bytes()).expect("Error Writing To STD Input Buffer");
+        self.stdin.write_all(format!("/say{}\n", input).as_bytes()).expect("Error Writing To STD Input Buffer");
         // flush the buffer in order to ensure the bytes get pushed to the stdin
         self.stdin.flush().expect("Error Flushing STD Input Buffer");
     }
