@@ -31,7 +31,12 @@ fn main() {
     // main loop for starting a new process and new timers
     'main: loop {
         // start the child process and grab the stdin and child process 
-        let mut child = Process::new(config_data.jar_file_name.clone(), config_data.java_args.clone(), config_data.nogui);
+        let mut child = Process::new(
+            config_data.jar_file_name.clone(), 
+            config_data.server_folder.clone(), 
+            config_data.java_args.clone(), 
+            config_data.nogui
+        );
 
         // create an iterator over the config warning msgs
         let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();

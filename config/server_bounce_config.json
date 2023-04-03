@@ -1,5 +1,6 @@
 {
     "jar_file_name": "fabric-server.jar",
+    "server_folder": "server",
     "java_args": [
         "-Xmx4G",
 	"-Xms4G",

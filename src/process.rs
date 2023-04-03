@@ -8,7 +8,7 @@ pub struct Process {
 }
 
 impl Process {
-    pub fn new(jar_file: String, args: Args, nogui: bool) -> Self {
+    pub fn new(jar_file: String, server_folder: String, args: Args, nogui: bool) -> Self {
         let valid_file = match File::open("server/".to_string() + &jar_file) {
             Ok(_) => true,
             Err(_) => false
@@ -24,7 +24,7 @@ impl Process {
         };
 
         let mut process = Command::new("java")
-            .current_dir(if production {"server"} else {"debug server"})
+            .current_dir(if production {server_folder.as_str()} else {"debug server"})
             .args(args)
             .arg("-jar")
             .arg(jar_file)
