@@ -1,3 +1,4 @@
 /target
 /server
 /debug server
+.env
