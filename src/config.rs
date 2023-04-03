@@ -6,7 +6,8 @@ pub struct Config {
     pub restart_duration: u64,
     pub restart_warning_msgs: Vec<RestartWarning>,
     pub jar_file_name: String,
-    pub java_args: Args
+    pub java_args: Args,
+    pub nogui: bool
 }
 
 impl Config {
