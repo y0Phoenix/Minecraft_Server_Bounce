@@ -97,7 +97,7 @@ fn main() {
                     println!("sending /say {}", current_msg.msg);
                     
                     // write the timed msg to the child stdin
-                    child.stdin_write(format!("/say {}", current_msg.msg));
+                    child.stdin_write(current_msg.msg.to_string());
 
                     // set the new duration to the next time instead of the current one
                     if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
