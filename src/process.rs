@@ -9,7 +9,7 @@ pub struct Process {
 
 impl Process {
     pub fn new(jar_file: String, server_folder: String, args: Args, nogui: bool) -> Self {
-        let valid_file = match File::open("server/".to_string() + &jar_file) {
+        let valid_file = match File::open(server_folder.clone() + &jar_file) {
             Ok(_) => true,
             Err(_) => false
         };
@@ -22,6 +22,8 @@ impl Process {
             Ok(str) => str.as_str().parse::<bool>().expect("Error: Invalid Environment Variable PRODUCTION"),
             Err(_) => false
         };
+
+        println!("Attempting To Start Jar File {} in {}", jar_file, server_folder);
 
         let mut process = Command::new("java")
             .current_dir(if production {server_folder.as_str()} else {"debug server"})
