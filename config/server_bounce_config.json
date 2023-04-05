@@ -1,9 +1,9 @@
 {
     "jar_file_name": "fabric-server.jar",
-    "server_folder": "server",
+    "server_folder": "../Gamer_Lounge_Minecraft-3.30.23",
     "java_args": [
-        "-Xmx4G",
-	"-Xms4G",
+        "-Xmx6G",
+	"-Xms6G",
 	"-XX:+AlwaysPreTouch",
 	"-XX:+DisableExplicitGC",
 	"-XX:+UseG1GC",
@@ -17,11 +17,11 @@
 	"-XX:G1MixedGCLiveThresholdPercent=50"
     ],
     "nogui": true,
-    "restart_duration": 1000000,
+    "restart_duration": 7202,
     "restart_warning_msgs": [
         {
             "msg": "Restarting Server In 30 Minutes...",
-            "time": 1800 
+            "time": 5400 
         },
         {
             "msg": "Restarting Server In 15 Minutes...",
