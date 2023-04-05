@@ -56,6 +56,7 @@ impl Process {
             },
             _ => {}
         }
+        drop(self.stdin);
     }
 
     pub fn stdin_write(&mut self, input: String) {

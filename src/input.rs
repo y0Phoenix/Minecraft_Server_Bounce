@@ -1,14 +1,19 @@
-use std::{thread::JoinHandle, sync::{mpsc, Arc, Mutex}, thread, collections::HashSet, str::SplitWhitespace};
+use std::{thread::JoinHandle, sync::{mpsc, Arc, Mutex, Condvar}, thread, collections::HashSet, str::SplitWhitespace, io::{BufRead, BufReader}, process::Command};
 
 pub struct Input {
     check_input_thread: JoinHandle<()>,
     check_rx_thread: JoinHandle<()>,
-    input: Arc<Mutex<String>>
+    input: Arc<Mutex<String>>,
+    killed: Arc<Mutex<bool>>
 }
 
 impl Input {
     pub fn new() -> Self {
         let (input_tx, input_rx) = mpsc::channel();
+
+        let killed = Arc::new(Mutex::new(false));
+
+        let (killed_clone1, killed_clone2) = (Arc::clone(&killed), Arc::clone(&killed));
 
         let global_input = Arc::new(Mutex::new(String::new()));
 
@@ -17,38 +22,57 @@ impl Input {
         let check_input_thread = thread::Builder::new()
             .name("checkinput".to_string())
             .spawn(move|| {
+                let killed = killed_clone1;
                 loop {
+                    if *killed.lock().unwrap() {
+                        println!("[thread:checkinput]: Closing Thread");
+                        break;
+                    }
                     let mut input = String::new();
                     std::io::stdin().read_line(&mut input).unwrap();
                     input = input.trim().to_string();
-                    match input_tx.send(input) {
+                    match input_tx.send(input.clone()) {
                         Err(_) => break,
                         _ => {}
+                    }
+                    if input == "stop".to_string() {
+                        println!("Closing [thread:checkinpu]");
+                        drop(input_tx);
+                        break;
                     }
                 }
             })
             .unwrap()
-        ;
-
+            ;
+        
         let check_rx_thread = thread::Builder::new()
-            .name("checkrx".to_string())
-            .spawn(move || {
-                loop {
-                    match input_rx.recv() {
-                        Ok(input) => {
-                            let mut set_input = global_input_clone.lock().unwrap();
-                            *set_input = input;
-                        },
-                        Err(_) => break
+        .name("checkrx".to_string())
+        .spawn(move || {
+            let killed = killed_clone2;
+            loop {
+                if *killed.lock().unwrap() {
+                    println!("[thread:checkrx]: Closing Thread");
+                    drop(input_rx);
+                    break;
+                }
+                match input_rx.recv() {
+                    Ok(input) => {
+                        let mut set_input = global_input_clone.lock().unwrap();
+                        *set_input = input;
+                    },
+                    Err(_) => {
+                        println!("Closing [thread:checkrx]");
+                        break
                     }
                 }
-            })
+            }})
             .unwrap()
         ;
         Self { 
             check_input_thread,
             check_rx_thread, 
-            input: global_input
+            input: global_input,
+            killed
          }
     }
 
@@ -64,8 +88,10 @@ impl Input {
     }
 
     pub fn kill(self) {
+        *self.killed.lock().unwrap() = true;
         self.check_input_thread.join().unwrap();
         self.check_rx_thread.join().unwrap();
+        println!("Threads Closed");
     }
 
     pub fn parse_input(input: String) -> InputCode {

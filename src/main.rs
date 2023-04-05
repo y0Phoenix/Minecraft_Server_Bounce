@@ -87,6 +87,7 @@ fn main() {
                     input::InputCode::Exit => {
                         child.stdin_write("Manual Server Shutdown In 10 Seconds...".to_string());
                         thread::sleep(Duration::from_secs(10));
+                        child.kill();
                         break 'main;
                     },
                     input::InputCode::Invalid => println!("Error: Invalid Command Input usage: restart -m \"Restarting In 10 Minutes...\" -t 600"),
