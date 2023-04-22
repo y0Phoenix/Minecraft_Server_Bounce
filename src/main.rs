@@ -28,16 +28,15 @@ fn main() {
 
     let mut app_state = AppState::default();
     
+    // start the child process and grab the stdin and child process 
+    let mut child = Process::new(
+        config_data.jar_file_name.clone(), 
+        config_data.server_folder.clone(), 
+        config_data.java_args.clone(), 
+        config_data.nogui
+        );
     // main loop for starting a new process and new timers
     'main: loop {
-        // start the child process and grab the stdin and child process 
-        let mut child = Process::new(
-            config_data.jar_file_name.clone(), 
-            config_data.server_folder.clone(), 
-            config_data.java_args.clone(), 
-            config_data.nogui
-        );
-
         // create an iterator over the config warning msgs
         let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();
 
@@ -87,7 +86,6 @@ fn main() {
                     input::InputCode::Exit => {
                         child.stdin_write("Manual Server Shutdown In 10 Seconds...".to_string());
                         thread::sleep(Duration::from_secs(10));
-                        child.kill();
                         break 'main;
                     },
                     input::InputCode::Invalid => println!("Error: Invalid Command Input usage: restart -m \"Restarting In 10 Minutes...\" -t 600"),
@@ -144,11 +142,12 @@ fn main() {
             }
         }
         // stop the current child process
-        child.kill();
+        child.restart();
         if app_state == AppState::Exit {
             break 'main;
         }
     }
     println!("Exiting App");
+    child.kill();
     input.kill();
 }
