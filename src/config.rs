@@ -17,7 +17,7 @@ impl Config {
         {
         let config_data = read_to_string(path).expect("Failed To Read Config File. Make Sure You Have `config/server_bounce_config.json` in your root directory");
 
-        let config_data = serde_json::from_str::<Config>(&config_data.as_str()).expect("Failed To Parse Data From Config File. Possibly Invalid Syntax");
+        let config_data = serde_json::from_str::<Config>(config_data.as_str()).expect("Failed To Parse Data From Config File. Possibly Invalid Syntax");
 
         config_data
     }

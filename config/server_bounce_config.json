@@ -1,6 +1,6 @@
 {
     "jar_file_name": "fabric-server.jar",
-    "server_folder": "../gamer lounge new/server",
+    "server_folder": "server",
     "java_args": [
         "-Xmx6G",
         "-Xms6G",

@@ -11,13 +11,10 @@ pub struct Process {
 
 impl Process {
     pub fn new(jar_file: String, server_folder: String, args: Args, nogui: bool) -> Self {
-        let valid_file = match File::open(server_folder.clone() + &jar_file) {
-            Ok(_) => true,
-            Err(_) => false
-        };
+        let valid_file = File::open(server_folder.clone() + &jar_file).is_ok(); 
 
         if !valid_file {
-            eprintln!("Error Accessing {} Check Config For `jar_file_name`", jar_file.clone());
+            eprintln!("Error Accessing {} Check Config For `jar_file_name`", jar_file);
         }
 
         let production = match env::var("PRODUCTION") {
@@ -47,15 +44,12 @@ impl Process {
                         let mut stdin_clone = stdin_clone.lock().unwrap();
                         stdin_clone.write_all("/stop".as_bytes()).unwrap();
                         stdin_clone.flush().unwrap();
-                        match process.try_wait() {
-                            Err(io_err) => {
-                                eprintln!("Internal Error: Error Stoping Child Process {}: Will Try Again In 30 Seconds", io_err);
-                                thread::sleep(Duration::from_secs(30));
-                                stdin_clone.write_all("/stop\n".as_bytes()).expect("Internal Error: Error While Writing To Std Input");
-                                stdin_clone.flush().unwrap();
-                                process.try_wait().expect("Internal Error: Error Retrying To Stop Child Process");
-                            },
-                            _ => {}                               
+                        if let Err(io_err) = process.try_wait() {
+                            eprintln!("Internal Error: Error Stoping Child Process {}: Will Try Again In 30 Seconds", io_err);
+                            thread::sleep(Duration::from_secs(30));
+                            stdin_clone.write_all("/stop\n".as_bytes()).expect("Internal Error: Error While Writing To Std Input");
+                            stdin_clone.flush().unwrap();
+                            process.try_wait().expect("Internal Error: Error Retrying To Stop Child Process");
                         }
                         if bool {
                             break;
@@ -67,14 +61,12 @@ impl Process {
                             continue;
                         }
                     }    
-                    match process.try_wait() {
-                        Ok(Some(_)) => {
-                            *killed.lock().unwrap() = true;
-                            process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
-                            let stdin = BufWriter::new(process.stdin.take().unwrap());
-                            *stdin_clone.lock().unwrap() = stdin;
-                        }
-                        _ => {}
+                    if let Ok(Some(_)) = process.try_wait() {
+                        println!("Minecraft Server Unexpectedly Stopped Attemping To Restart It");
+                        *killed.lock().unwrap() = true;
+                        process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
+                        let stdin = BufWriter::new(process.stdin.take().unwrap());
+                        *stdin_clone.lock().unwrap() = stdin;
                     }
                 }
             })
@@ -102,11 +94,14 @@ impl Process {
     pub fn restart(&mut self) {
        let _ = self.send_kill_tx.send(false); 
     }
+    pub fn is_stopped(&self) -> bool {
+        *self.killed.lock().unwrap()
+    }
 }
 
-fn spawn_process(jar_file: &String, server_folder: &String, args: &Args, nogui: &bool, production: &bool) -> Child {
+fn spawn_process(jar_file: &String, server_folder: &str, args: &Args, nogui: &bool, production: &bool) -> Child {
     Command::new("java")
-        .current_dir(if *production {server_folder.as_str()} else {"debug server"})
+        .current_dir(if *production {server_folder} else {"debug server"})
         .args(args)
         .arg("-jar")
         .arg(jar_file)

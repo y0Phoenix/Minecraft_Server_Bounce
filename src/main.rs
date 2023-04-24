@@ -48,7 +48,7 @@ fn main() {
 
         // inner loop for checking timers
         'timer: loop {
-            if app_state != AppState::default() {
+            if app_state != AppState::default() || child.is_stopped() {
                 break 'timer;
             }
             // grab the current delta

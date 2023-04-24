@@ -1,4 +1,4 @@
-use std::{thread::JoinHandle, sync::{mpsc, Arc, Mutex, Condvar}, thread, collections::HashSet, str::SplitWhitespace, io::{BufRead, BufReader}, process::Command};
+use std::{thread::JoinHandle, sync::{mpsc, Arc, Mutex}, thread, collections::HashSet, str::SplitWhitespace};
 
 pub struct Input {
     check_input_thread: JoinHandle<()>,
@@ -31,11 +31,10 @@ impl Input {
                     let mut input = String::new();
                     std::io::stdin().read_line(&mut input).unwrap();
                     input = input.trim().to_string();
-                    match input_tx.send(input.clone()) {
-                        Err(_) => break,
-                        _ => {}
+                    if input_tx.send(input.clone()).is_err() {
+                        break;
                     }
-                    if input == "stop".to_string() {
+                    if input == *"stop"{
                         println!("Closing [thread:checkinpu]");
                         drop(input_tx);
                         break;
@@ -103,54 +102,49 @@ impl Input {
 
         let default_twice_command_err = InputCode::InvalidMsg("Error: You Can't Use A Command Twice usage: say \"Restarting in 50 minutes...\"".to_string());
         
-        loop {
-            match parts.next() {
-                Some(str) => {
-                    match str {
-                        "-t" => {
-                            if let Some(time) = parts.next() {
-                                match time.parse::<u64>() {
-                                    Ok(time) => {
-                                        flags.insert(InputFlag::Time(time));
-                                        continue;
-                                    },
-                                    Err(_) => return InputCode::InvalidMsg("Error: Time Must A Valid u64 Number usage: restart -m \"Restarting\" -t 3000".to_string())
-                                }
-                            }
-                            return InputCode::InvalidMsg("Error: You Need To Specify A Time After The `-t` Flag usage: restart -m \"Restarting\" -t 3000".to_string());
-                        },
-                        "-m" => {
-                            if let Some(message) = Input::parse_msg(&mut parts) {
-                                flags.insert(InputFlag::Msg(message));
+        while let Some(str) = parts.next() {
+            match str {
+                "-t" => {
+                    if let Some(time) = parts.next() {
+                        match time.parse::<u64>() {
+                            Ok(time) => {
+                                flags.insert(InputFlag::Time(time));
                                 continue;
-                            }
-                            return InputCode::InvalidMsg("Error: Invalid Message Format usage: restart -m \"Restarting in 50 minutes\"".to_string());
-                        },
-                        "say" => {
-                            if command != InputCommand::default() {
-                                return default_twice_command_err;
-                            }
-                            if let Some(msg) = Input::parse_msg(&mut parts) {
-                                return InputCode::SendMsg(msg);
-                            }
-                            return InputCode::InvalidMsg("Error: Invalid Message Format After `say` usage: say \"Restarting In 50 Minutes\"".to_string());
-                        },
-                        "stop" => {
-                            if command != InputCommand::default() {
-                                return default_twice_command_err
-                            }
-                            return InputCode::Exit;
-                        },
-                        "restart" => {
-                            if command != InputCommand::default() {
-                                return default_twice_command_err
-                            }
-                            command = InputCommand::Restart;
-                        },
-                        _ => {}
+                            },
+                            Err(_) => return InputCode::InvalidMsg("Error: Time Must A Valid u64 Number usage: restart -m \"Restarting\" -t 3000".to_string())
+                        }
                     }
+                    return InputCode::InvalidMsg("Error: You Need To Specify A Time After The `-t` Flag usage: restart -m \"Restarting\" -t 3000".to_string());
                 },
-                None => break
+                "-m" => {
+                    if let Some(message) = Input::parse_msg(&mut parts) {
+                        flags.insert(InputFlag::Msg(message));
+                        continue;
+                    }
+                    return InputCode::InvalidMsg("Error: Invalid Message Format usage: restart -m \"Restarting in 50 minutes\"".to_string());
+                },
+                "say" => {
+                    if command != InputCommand::default() {
+                        return default_twice_command_err;
+                    }
+                    if let Some(msg) = Input::parse_msg(&mut parts) {
+                        return InputCode::SendMsg(msg);
+                    }
+                    return InputCode::InvalidMsg("Error: Invalid Message Format After `say` usage: say \"Restarting In 50 Minutes\"".to_string());
+                },
+                "stop" => {
+                    if command != InputCommand::default() {
+                        return default_twice_command_err
+                    }
+                    return InputCode::Exit;
+                },
+                "restart" => {
+                    if command != InputCommand::default() {
+                        return default_twice_command_err
+                    }
+                    command = InputCommand::Restart;
+                },
+                _ => {}
             }
         }
 
@@ -198,14 +192,14 @@ impl Input {
             match parts.next() {
                 Some(part) => {
                     // start message
-                    if part.starts_with("\"") {
+                    if part.starts_with('"') {
                         start = true;
-                        let tmp_msg = part.clone().replace("\"", "");
+                        let tmp_msg = <&str>::clone(&part).replace('"', "");
                         msg.push_str(format!("{} ", tmp_msg).as_str());
                     }
                     // end message
-                    else if start && part.ends_with("\"") {
-                        let tmp_msg = part.clone().replace("\"", "");
+                    else if start && part.ends_with('"') {
+                        let tmp_msg = <&str>::clone(&part).replace('"', "");
                         msg.push_str(format!("{} ", tmp_msg).as_str());
                         return Some(msg);
                     }
