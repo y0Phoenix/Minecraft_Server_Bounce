@@ -6,7 +6,7 @@ pub struct Process {
     killed: Arc<Mutex<bool>>,
     stop_checker_thread: JoinHandle<()>,
     send_kill_tx: Sender<bool>,
-    pub stdin: Arc<Mutex<BufWriter<ChildStdin>>>
+    pub stdin: Arc<Mutex<BufWriter<ChildStdin>>>,
 }
 
 impl Process {
@@ -32,7 +32,6 @@ impl Process {
         let mut process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
 
         let stdin = Arc::new(Mutex::new(BufWriter::new(process.stdin.take().expect("Failed To Aquire STD Input for Child Process"))));
-
         let stdin_clone = Arc::clone(&stdin);
 
         let stop_checker_thread = thread::Builder::new()
@@ -51,6 +50,7 @@ impl Process {
                             stdin_clone.flush().unwrap();
                             process.try_wait().expect("Internal Error: Error Retrying To Stop Child Process");
                         }
+
                         if bool {
                             break;
                         }
@@ -107,6 +107,7 @@ fn spawn_process(jar_file: &String, server_folder: &str, args: &Args, nogui: &bo
         .arg(jar_file)
         .arg(if *nogui {"nogui"} else {""})
         .stdin(Stdio::piped())
+        // .stdout(Stdio::piped())
         .spawn()
         .expect("Failed to start java process")
 }

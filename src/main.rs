@@ -150,4 +150,5 @@ fn main() {
     println!("Exiting App");
     child.kill();
     input.kill();
+    thread::sleep(Duration::from_secs_f32(2.5));
 }
