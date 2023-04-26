@@ -133,8 +133,6 @@ fn main() {
                 instant = Instant::now();
 
                 if custom_timer.ready {
-                    child.stdin_write("Manual Restart In 10 Seconds".to_string());
-                    thread::sleep(Duration::from_secs(10));
                     break 'customrestart;
                 }
                 // sleep the current thread. We don't need to check as fast as we can. The implemenation can afford a slow check
@@ -146,6 +144,7 @@ fn main() {
         if app_state == AppState::Exit {
             break 'main;
         }
+        app_state = AppState::default();
     }
     println!("Exiting App");
     child.kill();

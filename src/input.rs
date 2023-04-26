@@ -35,7 +35,7 @@ impl Input {
                         break;
                     }
                     if input == *"stop"{
-                        println!("Closing [thread:checkinpu]");
+                        println!("Closing [thread:checkinput]");
                         drop(input_tx);
                         break;
                     }
@@ -154,14 +154,14 @@ impl Input {
             for flag in flags.into_iter() {
                 match flag {
                     InputFlag::Msg(msg) => {
-                        if msg.is_empty() {
+                        if message.is_empty() {
                             message = msg;
                             continue;
                         }
                         return InputCode::InvalidMsg("Error: Too Many `-m` Flags usage: restart -m \"Restarting in 50 minutes...\" -t 3000".to_string());
                     },
                     InputFlag::Time(t) => {
-                        if time > 0 && t > 0{
+                        if time == 0 && t > 0{
                             time = t;
                             continue;
                         }
@@ -191,11 +191,17 @@ impl Input {
         loop {
             match parts.next() {
                 Some(part) => {
-                    // start message
-                    if part.starts_with('"') {
-                        start = true;
+                    // siingle word message
+                    if part.starts_with('"') && part.ends_with('"'){
                         let tmp_msg = <&str>::clone(&part).replace('"', "");
                         msg.push_str(format!("{} ", tmp_msg).as_str());
+                        return Some(msg);
+                    }
+                    // start message
+                    else if part.starts_with('"') {
+                        start = true;
+                        let tmp_msg = <&str>::clone(&part).replace('"', "");
+                        msg.push_str(format!("{} ", tmp_msg).as_str()); 
                     }
                     // end message
                     else if start && part.ends_with('"') {
