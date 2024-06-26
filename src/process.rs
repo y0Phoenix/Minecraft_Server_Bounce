@@ -118,6 +118,15 @@ fn spawn_process(jar_file: &String, server_folder: &str, _args: &Args, _nogui: &
             .current_dir(if *production {server_folder} else {"debug server"})
             .stdin(Stdio::piped());
 
+    #[cfg(target_os = "linux")]
+    let mut binding = Command::new("sh");
+    #[cfg(target_os = "linux")]
+    let command = binding
+            .arg("/C")
+            .arg(jar_file)
+            .current_dir(if *production {server_folder} else {"debug server"})
+            .stdin(Stdio::piped());
+
     command.spawn().expect("Failed to start server")
     // Command::new("sh")
     //     .current_dir(if *production {server_folder} else {"debug server"})
