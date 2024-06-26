@@ -99,15 +99,34 @@ impl Process {
     }
 }
 
-fn spawn_process(jar_file: &String, server_folder: &str, args: &Args, nogui: &bool, production: &bool) -> Child {
-    Command::new("java")
-        .current_dir(if *production {server_folder} else {"debug server"})
-        .args(args)
-        .arg("-jar")
-        .arg(jar_file)
-        .arg(if *nogui {"nogui"} else {""})
-        .stdin(Stdio::piped())
-        // .stdout(Stdio::piped())
-        .spawn()
-        .expect("Failed to start java process")
+fn spawn_process(jar_file: &String, server_folder: &str, _args: &Args, _nogui: &bool, production: &bool) -> Child {
+    #[cfg(target_os = "windows")]
+    let mut binding = Command::new("cmd");
+    #[cfg(target_os = "windows")]
+    let command = binding
+    .arg("/C")
+    .arg(jar_file)
+    .current_dir(if *production {server_folder} else {"debug server"})
+    .stdin(Stdio::piped());
+
+    #[cfg(target_os = "unix")]
+    let mut binding = Command::new("sh");
+    #[cfg(target_os = "unix")]
+    let command = binding
+            .arg("/C")
+            .arg(jar_file)
+            .current_dir(if *production {server_folder} else {"debug server"})
+            .stdin(Stdio::piped());
+
+    command.spawn().expect("Failed to start server")
+    // Command::new("sh")
+    //     .current_dir(if *production {server_folder} else {"debug server"})
+    //     .args(args)
+    //     .arg("-jar")
+    //     .arg(jar_file)
+    //     .arg(if *nogui {"nogui"} else {""})
+    //     .stdin(Stdio::piped())
+    //     // .stdout(Stdio::piped())
+    //     .spawn()
+    //     .expect("Failed to start java process")
 }

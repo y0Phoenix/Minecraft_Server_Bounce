@@ -1,6 +1,6 @@
 {
-    "jar_file_name": "fabric-server.jar",
-    "server_folder": "server",
+    "jar_file_name": "run.bat",
+    "server_folder": "../../../Downloads/Minecraft Mods/server",
     "java_args": [
         "-Xmx6G",
         "-Xms6G",
