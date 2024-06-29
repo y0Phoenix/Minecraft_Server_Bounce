@@ -1,13 +1,16 @@
 use std::{time::{Instant, Duration}, thread};
-
+use backup::start_backup;
 use config::Config;
 use input::Input;
 use process::Process;
 use rusty_time::Timer;
+use tracing::{error, info, warn, Level};
+use tracing_subscriber::FmtSubscriber;
 
 mod config;
 mod process;
 mod input;
+mod backup;
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub enum AppState {
@@ -20,6 +23,17 @@ pub enum AppState {
 fn main() {
     dotenv::dotenv().ok();
 
+    // a builder for `FmtSubscriber`.
+    let subscriber = FmtSubscriber::builder()
+        // all spans/events with a level higher than TRACE (e.g, debug, info, warn, etc.)
+        // will be written to stdout.
+        .with_max_level(Level::TRACE)
+        // completes the builder.
+        .finish();
+
+    tracing::subscriber::set_global_default(subscriber)
+        .expect("setting default subscriber failed");
+
     let config_data = Config::read("config/server_bounce_config.json");
     
     let mut instant = Instant::now();
@@ -30,7 +44,7 @@ fn main() {
     
     // start the child process and grab the stdin and child process 
     let mut child = Process::new(
-        config_data.jar_file_name.clone(), 
+        config_data.server_start_file.clone(), 
         config_data.server_folder.clone(), 
         config_data.java_args.clone(), 
         config_data.nogui
@@ -41,9 +55,9 @@ fn main() {
         let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();
 
         // create two timers one for the reset duration and the other for the warning messages
-        println!("creating new warning timer for {} millis", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
+        info!("creating new warning timer for {} millis", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
         let mut warning_timer = Timer::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
-        println!("creating new restart timer for {} millis", config_data.restart_duration * 1000);
+        info!("creating new restart timer for {} millis", config_data.restart_duration * 1000);
         let mut reset_timer = Timer::from_millis(config_data.restart_duration * 1000);
 
         // inner loop for checking timers
@@ -88,8 +102,18 @@ fn main() {
                         thread::sleep(Duration::from_secs(10));
                         break 'main;
                     },
-                    input::InputCode::Invalid => println!("Error: Invalid Command Input usage: restart -m \"Restarting In 10 Minutes...\" -t 600"),
-                    input::InputCode::InvalidMsg(msg) => println!("{}", msg)
+                    input::InputCode::Invalid => warn!("Error: Invalid Command Input usage: restart -m \"Restarting In 10 Minutes...\" -t 600"),
+                    input::InputCode::InvalidMsg(msg) => warn!("{}", msg),
+                    input::InputCode::Backup => {
+                        match start_backup(&config_data.server_folder, &config_data.backup_file_name) {
+                            Ok(s) => {
+                                if s.success() {
+                                    info!("Backup created and uploaded to Google Drive");
+                                }
+                            },
+                            Err(err) => error!("Failed to create and upload backup to Google Drive: {}", err),
+                        }
+                    },
                 }
             }
 
@@ -98,18 +122,18 @@ fn main() {
                 // grab the next warning message from the iterator
                 if let Some(current_msg) = warning_msgs.next() {
                     let (i, current_msg) = current_msg;
-                    println!("sending /say {}", current_msg.msg);
+                    info!("sending /say {}", current_msg.msg);
                     
                     // write the timed msg to the child stdin
                     child.stdin_write(current_msg.msg.to_string());
 
                     // set the new duration to the next time instead of the current one
                     if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
-                        println!("new timer duration {}", new_durration.time);
+                        info!("new timer duration {}", new_durration.time);
                         warning_timer.duration = Duration::from_secs(new_durration.time);
                     }
                     else {
-                        println!("end of new timers");
+                        info!("end of new timers");
                     }
                     // reset the timer after the new duration is set
                     warning_timer.reset();
@@ -117,7 +141,7 @@ fn main() {
             }
             // check if the reset timer is ready
             if reset_timer.ready {
-                println!("restart timer ready");
+                info!("restart timer ready");
                 break 'timer;
             }
             // sleep the current thread. We don't need to check as fast as we can. The implemenation can afford a slow check
@@ -125,7 +149,7 @@ fn main() {
         }
         // when we enter a manual restart with a timer
         if let AppState::RestartWithTime(time) = app_state {
-            println!("creating new restart timer for {}", time * 1000);
+            info!("creating new restart timer for {}", time * 1000);
             let mut custom_timer = Timer::from_millis(time * 1000);
             'customrestart: loop {
                 let delta = instant.elapsed();
@@ -146,7 +170,7 @@ fn main() {
         }
         app_state = AppState::default();
     }
-    println!("Exiting App");
+    info!("Exiting App");
     child.kill();
     input.kill();
     thread::sleep(Duration::from_secs_f32(3.5));

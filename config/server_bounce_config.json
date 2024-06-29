@@ -1,6 +1,7 @@
 {
-    "jar_file_name": "run.bat",
-    "server_folder": "../../../Downloads/Minecraft Mods/server",
+    "server_start_file": "run.sh",
+    "server_folder": "../../Minecraft-Servers/server",
+    "backup_file_name": "HazardousDaniels server",
     "java_args": [
         "-Xmx6G",
         "-Xms6G",

@@ -2,3 +2,5 @@
 /server
 /debug server
 .env
+.DS_Store
+*.zip

@@ -144,6 +144,12 @@ impl Input {
                     }
                     command = InputCommand::Restart;
                 },
+                "backup" => {
+                    if command != InputCommand::default() {
+                        return default_twice_command_err
+                    }
+                    return InputCode::Backup;
+                }
                 _ => {}
             }
         }
@@ -233,7 +239,8 @@ pub enum InputCode {
     Restart,
     Exit,
     Invalid,
-    InvalidMsg(String)
+    InvalidMsg(String),
+    Backup
 }
 
 #[derive(PartialEq, Eq, Hash)]

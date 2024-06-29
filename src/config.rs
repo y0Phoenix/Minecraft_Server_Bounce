@@ -5,8 +5,9 @@ use serde::{Serialize, Deserialize};
 pub struct Config {
     pub restart_duration: u64,
     pub restart_warning_msgs: Vec<RestartWarning>,
-    pub jar_file_name: String,
+    pub server_start_file: String,
     pub server_folder: String,
+    pub backup_file_name: String,
     pub java_args: Args,
     pub nogui: bool
 }
