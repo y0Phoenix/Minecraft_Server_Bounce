@@ -106,7 +106,7 @@ fn main() {
                     input::InputCode::InvalidMsg(msg) => warn!("{}", msg),
                     input::InputCode::Backup => {
                         child.say("Manual server backup in 1 minute. Server will shutdown and may take ahwile to restart.".to_string());
-                        thread::sleep(Duration::from_secs(5));
+                        thread::sleep(Duration::from_secs(60));
                         match start_backup(&config_data.server_folder, &config_data.backup_file_name) {
                             Ok(s) => {
                                 if s.success() {
