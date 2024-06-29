@@ -111,7 +111,7 @@ fn main() {
                             input::InputCode::InvalidMsg(msg) => warn!("{}", msg),
                             input::InputCode::Backup => {
                                 child.say("Manual server backup in 1 minute. Server will shutdown and may take ahwile to restart.".to_string());
-                                thread::sleep(Duration::from_secs(5));
+                                thread::sleep(Duration::from_secs(60));
                                 app_state = AppState::Backup;
                                 break 'restart;
                             },
