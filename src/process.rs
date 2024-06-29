@@ -1,5 +1,7 @@
 use std::{io::{BufWriter, Write}, process::{ChildStdin, Child, Command, Stdio}, time::Duration, thread::{self, JoinHandle}, fs::File, env, sync::{Arc, Mutex, mpsc::{Sender, self}}};
 
+use tracing::{error, info};
+
 use crate::config::Args;
 
 pub struct Process {
@@ -14,7 +16,7 @@ impl Process {
         let valid_file = File::open(server_folder.clone() + &jar_file).is_ok(); 
 
         if !valid_file {
-            eprintln!("Error Accessing {} Check Config For `jar_file_name`", jar_file);
+            error!("Error Accessing {} Check Config For `jar_file_name`", jar_file);
         }
 
         let production = match env::var("PRODUCTION") {
@@ -22,7 +24,7 @@ impl Process {
             Err(_) => false
         };
 
-        println!("Attempting To Start Jar File {} in {}", jar_file, server_folder);
+        info!("Attempting To Start Jar File {} in {}", jar_file, server_folder);
 
         let killed = Arc::new(Mutex::new(false));
         let killed_clone = Arc::clone(&killed);
@@ -44,7 +46,7 @@ impl Process {
                         stdin_clone.write_all("/stop".as_bytes()).unwrap();
                         stdin_clone.flush().unwrap();
                         if let Err(io_err) = process.try_wait() {
-                            eprintln!("Internal Error: Error Stoping Child Process {}: Will Try Again In 30 Seconds", io_err);
+                            error!("Internal Error: Error Stoping Child Process {}: Will Try Again In 30 Seconds", io_err);
                             thread::sleep(Duration::from_secs(30));
                             stdin_clone.write_all("/stop\n".as_bytes()).expect("Internal Error: Error While Writing To Std Input");
                             stdin_clone.flush().unwrap();
@@ -62,7 +64,7 @@ impl Process {
                         }
                     }    
                     if let Ok(Some(_)) = process.try_wait() {
-                        println!("Minecraft Server Unexpectedly Stopped Attemping To Restart It");
+                        info!("Minecraft Server Unexpectedly Stopped Attemping To Restart It");
                         *killed.lock().unwrap() = true;
                         process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
                         let stdin = BufWriter::new(process.stdin.take().unwrap());

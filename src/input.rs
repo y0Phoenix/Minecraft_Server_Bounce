@@ -1,5 +1,7 @@
 use std::{collections::HashSet, str::SplitWhitespace, sync::{mpsc::{self, Receiver}, Arc, Mutex}, thread::{self, JoinHandle}};
 
+use tracing::info;
+
 pub struct Input {
     check_input_thread: JoinHandle<()>,
     input_rx: Receiver<String>,
@@ -20,7 +22,7 @@ impl Input {
                 let killed = killed_clone1;
                 loop {
                     if *killed.lock().unwrap() {
-                        println!("[thread:checkinput]: Closing Thread");
+                        info!("[thread:checkinput]: Closing Thread");
                         break;
                     }
                     let mut input = String::new();
@@ -30,7 +32,7 @@ impl Input {
                         break;
                     }
                     if input == *"stop"{
-                        println!("Closing [thread:checkinput]");
+                        info!("Closing [thread:checkinput]");
                         drop(input_tx);
                         break;
                     }
@@ -60,7 +62,7 @@ impl Input {
     pub fn kill(self) {
         *self.killed.lock().unwrap() = true;
         self.check_input_thread.join().unwrap();
-        println!("Threads Closed");
+        info!("Threads Closed");
     }
 
     pub fn parse_input(input: String) -> InputCode {
