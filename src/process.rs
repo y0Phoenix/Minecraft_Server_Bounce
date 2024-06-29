@@ -12,11 +12,11 @@ pub struct Process {
 }
 
 impl Process {
-    pub fn new(jar_file: String, server_folder: String, args: Args, nogui: bool) -> Self {
-        let valid_file = File::open(server_folder.clone() + &jar_file).is_ok(); 
+    pub fn new(file_name: String, server_folder: String, args: Args, nogui: bool) -> Self {
+        let valid_file = File::open(format!("{}/{}", server_folder, file_name)).is_ok(); 
 
         if !valid_file {
-            error!("Error Accessing {} Check Config For `jar_file_name`", jar_file);
+            error!("Error Accessing {} Check Config For `server_start_file`", file_name);
         }
 
         let production = match env::var("PRODUCTION") {
@@ -24,14 +24,14 @@ impl Process {
             Err(_) => false
         };
 
-        info!("Attempting To Start Jar File {} in {}", jar_file, server_folder);
+        info!("Attempting To Start Jar File {} in {}", file_name, server_folder);
 
         let killed = Arc::new(Mutex::new(false));
         let killed_clone = Arc::clone(&killed);
 
         let (send_kill_tx, send_kill_rx) = mpsc::channel::<bool>();
 
-        let mut process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
+        let mut process = spawn_process(&file_name, &server_folder, &args, &nogui, &production);
 
         let stdin = Arc::new(Mutex::new(BufWriter::new(process.stdin.take().expect("Failed To Aquire STD Input for Child Process"))));
         let stdin_clone = Arc::clone(&stdin);
@@ -57,7 +57,7 @@ impl Process {
                             break;
                         }
                         else {
-                            process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
+                            process = spawn_process(&file_name, &server_folder, &args, &nogui, &production);
                             let stdin = BufWriter::new(process.stdin.take().unwrap());
                             *stdin_clone = stdin;
                             continue;
@@ -66,7 +66,7 @@ impl Process {
                     if let Ok(Some(_)) = process.try_wait() {
                         info!("Minecraft Server Unexpectedly Stopped Attemping To Restart It");
                         *killed.lock().unwrap() = true;
-                        process = spawn_process(&jar_file, &server_folder, &args, &nogui, &production);
+                        process = spawn_process(&file_name, &server_folder, &args, &nogui, &production);
                         let stdin = BufWriter::new(process.stdin.take().unwrap());
                         *stdin_clone.lock().unwrap() = stdin;
                     }
