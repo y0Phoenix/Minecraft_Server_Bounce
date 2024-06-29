@@ -1,9 +1,8 @@
-use std::{thread::JoinHandle, sync::{mpsc, Arc, Mutex}, thread, collections::HashSet, str::SplitWhitespace};
+use std::{collections::HashSet, str::SplitWhitespace, sync::{mpsc::{self, Receiver}, Arc, Mutex}, thread::{self, JoinHandle}};
 
 pub struct Input {
     check_input_thread: JoinHandle<()>,
-    check_rx_thread: JoinHandle<()>,
-    input: Arc<Mutex<String>>,
+    input_rx: Receiver<String>,
     killed: Arc<Mutex<bool>>
 }
 
@@ -13,11 +12,7 @@ impl Input {
 
         let killed = Arc::new(Mutex::new(false));
 
-        let (killed_clone1, killed_clone2) = (Arc::clone(&killed), Arc::clone(&killed));
-
-        let global_input = Arc::new(Mutex::new(String::new()));
-
-        let global_input_clone = Arc::clone(&global_input);
+        let killed_clone1 = Arc::clone(&killed);
 
         let check_input_thread = thread::Builder::new()
             .name("checkinput".to_string())
@@ -44,52 +39,27 @@ impl Input {
             .unwrap()
             ;
         
-        let check_rx_thread = thread::Builder::new()
-        .name("checkrx".to_string())
-        .spawn(move || {
-            let killed = killed_clone2;
-            loop {
-                if *killed.lock().unwrap() {
-                    println!("[thread:checkrx]: Closing Thread");
-                    drop(input_rx);
-                    break;
-                }
-                match input_rx.recv() {
-                    Ok(input) => {
-                        let mut set_input = global_input_clone.lock().unwrap();
-                        *set_input = input;
-                    },
-                    Err(_) => {
-                        println!("Closing [thread:checkrx]");
-                        break
-                    }
-                }
-            }})
-            .unwrap()
-        ;
         Self { 
             check_input_thread,
-            check_rx_thread, 
-            input: global_input,
+            input_rx,
             killed
          }
     }
 
     pub fn new_input(&mut self) -> Option<String> {
-        let mut input = self.input.lock().unwrap();
-
-        if !input.is_empty() {
-            let new_input = input.to_string();
-            *input = String::new();
-            return Some(new_input);
+        match self.input_rx.recv() {
+            Ok(input) => {
+                return Some(input);
+            },
+            Err(_) => {
+                return None;
+            }
         }
-        None
     }
 
     pub fn kill(self) {
         *self.killed.lock().unwrap() = true;
         self.check_input_thread.join().unwrap();
-        self.check_rx_thread.join().unwrap();
         println!("Threads Closed");
     }
 
@@ -149,6 +119,15 @@ impl Input {
                         return default_twice_command_err
                     }
                     return InputCode::Backup;
+                },
+                "cmd" => {
+                    if command != InputCommand::default() {
+                        return default_twice_command_err;
+                    }
+                    if let Some(cmd) = Input::parse_msg(&mut parts) {
+                        return InputCode::Cmd(cmd);
+                    }
+                    return InputCode::InvalidMsg("Error: Invalid Message Format After `cmd` usage: cmd \"/op <user to op>\"".to_string());
                 }
                 _ => {}
             }
@@ -240,7 +219,8 @@ pub enum InputCode {
     Exit,
     Invalid,
     InvalidMsg(String),
-    Backup
+    Backup,
+    Cmd(String)
 }
 
 #[derive(PartialEq, Eq, Hash)]

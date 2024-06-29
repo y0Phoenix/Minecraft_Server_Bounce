@@ -84,10 +84,18 @@ impl Process {
         self.stop_checker_thread.join().unwrap();
     }
 
-    pub fn stdin_write(&mut self, input: String) {
+    pub fn say(&mut self, input: String) {
         let mut stdin = self.stdin.lock().unwrap();
         // write the msg to the sdtin buffer
         stdin.write_all(format!("/say {}\n", input).as_bytes()).expect("Error Writing To STD Input Buffer");
+        // flush the buffer in order to ensure the bytes get pushed to the stdin
+        stdin.flush().expect("Error Flushing STD Input Buffer");
+    }
+    pub fn cmd(&mut self, cmd: String) {
+        let cmd = cmd.trim();
+        let mut stdin = self.stdin.lock().unwrap();
+        // write the msg to the sdtin buffer
+        stdin.write_all(format!("{}\n", cmd).as_bytes()).expect("Error Writing To STD Input Buffer");
         // flush the buffer in order to ensure the bytes get pushed to the stdin
         stdin.flush().expect("Error Flushing STD Input Buffer");
     }
@@ -113,7 +121,6 @@ fn spawn_process(jar_file: &String, server_folder: &str, _args: &Args, _nogui: &
     let mut binding = Command::new("sh");
     #[cfg(target_os = "unix")]
     let command = binding
-            .arg("/C")
             .arg(jar_file)
             .current_dir(if *production {server_folder} else {"debug server"})
             .stdin(Stdio::piped());
@@ -122,7 +129,6 @@ fn spawn_process(jar_file: &String, server_folder: &str, _args: &Args, _nogui: &
     let mut binding = Command::new("sh");
     #[cfg(target_os = "linux")]
     let command = binding
-            .arg("/C")
             .arg(jar_file)
             .current_dir(if *production {server_folder} else {"debug server"})
             .stdin(Stdio::piped());
