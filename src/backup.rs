@@ -12,7 +12,7 @@ pub fn start_backup(dir: &String, file_name: &String) -> Result<ExitStatus, Erro
         .wait()
         .expect("Failed to zip server folder")
     ;
-    info!("Finished zipping server folder into archive \"{} {}.zip\"", file_name, curr_date);
+    info!("Finished zipping server folder into archive \"{} {}.zip\". Now starting Google Drive upload, this may take ahwile.", file_name, curr_date);
     Command::new("rclone")
         .args(["copy", "--update", format!("{} {}.zip", file_name, curr_date).as_str(), "gdrive:Minecraft-Servers/"])
         .spawn()

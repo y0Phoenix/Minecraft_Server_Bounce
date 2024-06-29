@@ -100,7 +100,7 @@ impl Process {
         stdin.flush().expect("Error Flushing STD Input Buffer");
     }
     pub fn restart(&mut self) {
-       let _ = self.send_kill_tx.send(false); 
+        let _ = self.send_kill_tx.send(false); 
     }
     pub fn is_stopped(&self) -> bool {
         *self.killed.lock().unwrap()
