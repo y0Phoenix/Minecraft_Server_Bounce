@@ -75,7 +75,6 @@ fn main() {
                     instant = Instant::now();
         
                     // update the timer with the delta
-                    info!("ticking timer");
                     reset_timer.tick(delta);
                     warning_timer.tick(delta);
         
