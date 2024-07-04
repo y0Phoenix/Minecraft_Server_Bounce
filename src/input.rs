@@ -1,4 +1,4 @@
-use std::{collections::HashSet, str::SplitWhitespace, sync::{mpsc::{self, Receiver}, Arc, Mutex}, thread::{self, JoinHandle}};
+use std::{collections::HashSet, str::SplitWhitespace, sync::{mpsc::{self, Receiver}, Arc, Mutex}, thread::{self, JoinHandle}, time::Duration};
 
 use tracing::info;
 
@@ -49,7 +49,7 @@ impl Input {
     }
 
     pub fn new_input(&mut self) -> Option<String> {
-        match self.input_rx.recv() {
+        match self.input_rx.recv_timeout(Duration::from_millis(10)) {
             Ok(input) => {
                 return Some(input);
             },

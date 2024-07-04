@@ -61,9 +61,9 @@ fn main() {
         
                 // create two timers one for the reset duration and the other for the warning messages
                 info!("creating new warning timer for {} minutes", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time / 60);
-                let mut warning_timer = Timer::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000);
+                let mut warning_timer = Timer::new(Duration::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000));
                 info!("creating new restart timer for {} minutes", config_data.restart_duration / 60);
-                let mut reset_timer = Timer::from_millis(config_data.restart_duration * 1000);
+                let mut reset_timer = Timer::new(Duration::from_millis(config_data.restart_duration * 1000));
         
                 // inner loop for checking timers
                 'timer: loop {
@@ -75,8 +75,9 @@ fn main() {
                     instant = Instant::now();
         
                     // update the timer with the delta
-                    reset_timer.update(delta);
-                    warning_timer.update(delta);
+                    info!("ticking timer");
+                    reset_timer.tick(delta);
+                    warning_timer.tick(delta);
         
                     // check for user input 
                     if let Some(new_input) = input.new_input() {
@@ -120,7 +121,7 @@ fn main() {
                     }
         
                     // check if we are ready to send a warning message
-                    if warning_timer.ready {
+                    if warning_timer.finished() {
                         // grab the next warning message from the iterator
                         if let Some(current_msg) = warning_msgs.next() {
                             let (i, current_msg) = current_msg;
@@ -132,7 +133,7 @@ fn main() {
                             // set the new duration to the next time instead of the current one
                             if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
                                 info!("new timer duration {} minutes", new_durration.time / 60);
-                                warning_timer.duration = Duration::from_secs(new_durration.time);
+                                warning_timer.set_duration(Duration::from_secs(new_durration.time));
                             }
                             else {
                                 info!("end of new timers");
@@ -142,7 +143,7 @@ fn main() {
                         }
                     }
                     // check if the reset timer is ready
-                    if reset_timer.ready {
+                    if reset_timer.finished() {
                         info!("restart timer ready");
                         break 'timer;
                     }
@@ -152,13 +153,13 @@ fn main() {
                 // when we enter a manual restart with a timer
                 if let AppState::RestartWithTime(time) = app_state {
                     info!("creating new restart timer for {} minutes", time / 60);
-                    let mut custom_timer = Timer::from_millis(time * 1000);
+                    let mut custom_timer = Timer::new(Duration::from_millis(time * 1000));
                     'customrestart: loop {
                         let delta = instant.elapsed();
-                        custom_timer.update(delta);
+                        custom_timer.tick(delta);
                         instant = Instant::now();
         
-                        if custom_timer.ready {
+                        if custom_timer.finished() {
                             break 'customrestart;
                         }
                         // sleep the current thread. We don't need to check as fast as we can. The implemenation can afford a slow check
