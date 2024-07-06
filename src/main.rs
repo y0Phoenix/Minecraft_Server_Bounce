@@ -1,16 +1,21 @@
-use std::{time::{Instant, Duration}, thread};
 use backup::start_backup;
+use chrono::Local;
 use config::Config;
 use input::Input;
 use process::Process;
 use rusty_time::Timer;
+use std::{
+    fs::{remove_file, File},
+    thread,
+    time::{Duration, Instant},
+};
 use tracing::{error, info, warn, Level};
 use tracing_subscriber::FmtSubscriber;
 
-mod config;
-mod process;
-mod input;
 mod backup;
+mod config;
+mod input;
+mod process;
 
 #[derive(Debug, Default, PartialEq, Eq)]
 pub enum AppState {
@@ -18,7 +23,7 @@ pub enum AppState {
     Exit,
     Backup,
     #[default]
-    Normal
+    Normal,
 }
 
 fn main() {
@@ -32,11 +37,10 @@ fn main() {
         // completes the builder.
         .finish();
 
-    tracing::subscriber::set_global_default(subscriber)
-        .expect("setting default subscriber failed");
+    tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
 
     let config_data = Config::read("config/server_bounce_config.json");
-    
+
     let mut instant = Instant::now();
 
     let mut input = Input::new();
@@ -44,27 +48,46 @@ fn main() {
     let mut app_state = AppState::default();
 
     let mut child: Option<Process>;
-    
+
     // main loop for starting a new process and new timers
     'main: loop {
-        // start the child process and grab the stdin and child process 
+        // start the child process and grab the stdin and child process
         child = Some(Process::new(
-            config_data.server_start_file.clone(), 
-            config_data.server_folder.clone(), 
-            config_data.java_args.clone(), 
-            config_data.nogui
+            config_data.server_start_file.clone(),
+            config_data.server_folder.clone(),
+            config_data.java_args.clone(),
+            config_data.nogui,
         ));
         if let Some(child) = &mut child {
             'restart: loop {
                 // create an iterator over the config warning msgs
                 let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();
-        
+
                 // create two timers one for the reset duration and the other for the warning messages
-                info!("creating new warning timer for {} minutes", config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time / 60);
-                let mut warning_timer = Timer::new(Duration::from_millis(config_data.restart_warning_msgs.get(0).expect("No Warning Msg Configs Found").time * 1000));
-                info!("creating new restart timer for {} minutes", config_data.restart_duration / 60);
-                let mut reset_timer = Timer::new(Duration::from_millis(config_data.restart_duration * 1000));
-        
+                info!(
+                    "creating new warning timer for {} minutes",
+                    config_data
+                        .restart_warning_msgs
+                        .get(0)
+                        .expect("No Warning Msg Configs Found")
+                        .time
+                        / 60
+                );
+                let mut warning_timer = Timer::new(Duration::from_millis(
+                    config_data
+                        .restart_warning_msgs
+                        .get(0)
+                        .expect("No Warning Msg Configs Found")
+                        .time
+                        * 1000,
+                ));
+                info!(
+                    "creating new restart timer for {} minutes",
+                    config_data.restart_duration / 60
+                );
+                let mut reset_timer =
+                    Timer::new(Duration::from_millis(config_data.restart_duration * 1000));
+
                 // inner loop for checking timers
                 'timer: loop {
                     if app_state != AppState::default() || child.is_stopped() {
@@ -73,12 +96,12 @@ fn main() {
                     // grab the current delta
                     let delta = instant.elapsed();
                     instant = Instant::now();
-        
+
                     // update the timer with the delta
                     reset_timer.tick(delta);
                     warning_timer.tick(delta);
-        
-                    // check for user input 
+
+                    // check for user input
                     if let Some(new_input) = input.new_input() {
                         match Input::parse_input(new_input) {
                             input::InputCode::SendMsg(msg) => child.say(msg),
@@ -118,23 +141,23 @@ fn main() {
                             input::InputCode::Cmd(cmd) => child.cmd(cmd),
                         }
                     }
-        
+
                     // check if we are ready to send a warning message
                     if warning_timer.finished() {
                         // grab the next warning message from the iterator
                         if let Some(current_msg) = warning_msgs.next() {
                             let (i, current_msg) = current_msg;
                             info!("sending /say {}", current_msg.msg);
-                            
+
                             // write the timed msg to the child stdin
                             child.say(current_msg.msg.to_string());
-        
+
                             // set the new duration to the next time instead of the current one
-                            if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1) {
+                            if let Some(new_durration) = config_data.restart_warning_msgs.get(i + 1)
+                            {
                                 info!("new timer duration {} minutes", new_durration.time / 60);
                                 warning_timer.set_duration(Duration::from_secs(new_durration.time));
-                            }
-                            else {
+                            } else {
                                 info!("end of new timers");
                             }
                             // reset the timer after the new duration is set
@@ -157,7 +180,7 @@ fn main() {
                         let delta = instant.elapsed();
                         custom_timer.tick(delta);
                         instant = Instant::now();
-        
+
                         if custom_timer.finished() {
                             break 'customrestart;
                         }
@@ -178,10 +201,24 @@ fn main() {
             match start_backup(&config_data.server_folder, &config_data.backup_file_name) {
                 Ok(s) => {
                     if s.success() {
-                        info!("Backup created and uploaded to Google Drive {}", s.to_string());
+                        let curr_date = Local::now().format("%m.%d.%Y").to_string();
+                        match remove_file(format!(
+                            "./{} {}.zip",
+                            config_data.backup_file_name, curr_date
+                        )) {
+                            Ok(_) => info!("local server zip file deleted"),
+                            Err(e) => error!("failed to remove local server zip file {}", e),
+                        }
+                        info!(
+                            "Backup created and uploaded to Google Drive {}",
+                            s.to_string()
+                        );
                     }
-                },
-                Err(err) => error!("Failed to create and upload backup to Google Drive: {}", err),
+                }
+                Err(err) => error!(
+                    "Failed to create and upload backup to Google Drive: {}",
+                    err
+                ),
             }
         }
     }
