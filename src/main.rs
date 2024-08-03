@@ -5,7 +5,7 @@ use input::Input;
 use process::Process;
 use rusty_time::Timer;
 use std::{
-    fs::{remove_file, File},
+    fs::remove_file,
     thread,
     time::{Duration, Instant},
 };
@@ -59,9 +59,12 @@ fn main() {
             config_data.nogui,
         ));
         if let Some(child) = &mut child {
+            app_state = AppState::default();
             'restart: loop {
                 // create an iterator over the config warning msgs
                 let mut warning_msgs = config_data.restart_warning_msgs.iter().enumerate();
+
+                info!("Restart loop started with app_state {:?}", app_state);
 
                 // create two timers one for the reset duration and the other for the warning messages
                 info!(
