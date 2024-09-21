@@ -2,6 +2,7 @@
     "server_start_file": "run.sh",
     "server_folder": "../../Minecraft-Servers/server",
     "backup_file_name": "HazardousDaniels server",
+    "backup_time": "00:33",
     "java_args": [
         "-Xmx6G",
         "-Xms6G",

@@ -5,7 +5,7 @@ use tracing::info;
 pub struct Input {
     check_input_thread: JoinHandle<()>,
     input_rx: Receiver<String>,
-    killed: Arc<Mutex<bool>>
+    killed: Arc<Mutex<bool>>,
 }
 
 impl Input {
@@ -18,7 +18,7 @@ impl Input {
 
         let check_input_thread = thread::Builder::new()
             .name("checkinput".to_string())
-            .spawn(move|| {
+            .spawn(move || {
                 let killed = killed_clone1;
                 loop {
                     if *killed.lock().unwrap() {
@@ -31,28 +31,27 @@ impl Input {
                     if input_tx.send(input.clone()).is_err() {
                         break;
                     }
-                    if input == *"stop"{
+                    if input == *"stop" {
                         info!("Closing [thread:checkinput]");
                         drop(input_tx);
                         break;
                     }
                 }
             })
-            .unwrap()
-            ;
-        
-        Self { 
+            .unwrap();
+
+        Self {
             check_input_thread,
             input_rx,
-            killed
-         }
+            killed,
+        }
     }
 
     pub fn new_input(&mut self) -> Option<String> {
         match self.input_rx.recv_timeout(Duration::from_millis(10)) {
             Ok(input) => {
                 return Some(input);
-            },
+            }
             Err(_) => {
                 return None;
             }
@@ -72,8 +71,11 @@ impl Input {
 
         let mut command = InputCommand::default();
 
-        let default_twice_command_err = InputCode::InvalidMsg("Error: You Can't Use A Command Twice usage: say \"Restarting in 50 minutes...\"".to_string());
-        
+        let default_twice_command_err = InputCode::InvalidMsg(
+            "Error: You Can't Use A Command Twice usage: say \"Restarting in 50 minutes...\""
+                .to_string(),
+        );
+
         while let Some(str) = parts.next() {
             match str {
                 "-t" => {
@@ -87,14 +89,14 @@ impl Input {
                         }
                     }
                     return InputCode::InvalidMsg("Error: You Need To Specify A Time After The `-t` Flag usage: restart -m \"Restarting\" -t 3000".to_string());
-                },
+                }
                 "-m" => {
                     if let Some(message) = Input::parse_msg(&mut parts) {
                         flags.insert(InputFlag::Msg(message));
                         continue;
                     }
                     return InputCode::InvalidMsg("Error: Invalid Message Format usage: restart -m \"Restarting in 50 minutes\"".to_string());
-                },
+                }
                 "say" => {
                     if command != InputCommand::default() {
                         return default_twice_command_err;
@@ -103,25 +105,25 @@ impl Input {
                         return InputCode::SendMsg(msg);
                     }
                     return InputCode::InvalidMsg("Error: Invalid Message Format After `say` usage: say \"Restarting In 50 Minutes\"".to_string());
-                },
+                }
                 "stop" => {
                     if command != InputCommand::default() {
-                        return default_twice_command_err
+                        return default_twice_command_err;
                     }
                     return InputCode::Exit;
-                },
+                }
                 "restart" => {
                     if command != InputCommand::default() {
-                        return default_twice_command_err
+                        return default_twice_command_err;
                     }
                     command = InputCommand::Restart;
-                },
+                }
                 "backup" => {
                     if command != InputCommand::default() {
-                        return default_twice_command_err
+                        return default_twice_command_err;
                     }
                     return InputCode::Backup;
-                },
+                }
                 "cmd" => {
                     if command != InputCommand::default() {
                         return default_twice_command_err;
@@ -129,7 +131,10 @@ impl Input {
                     if let Some(cmd) = Input::parse_msg(&mut parts) {
                         return InputCode::Cmd(cmd);
                     }
-                    return InputCode::InvalidMsg("Error: Invalid Message Format After `cmd` usage: cmd \"/op <user to op>\"".to_string());
+                    return InputCode::InvalidMsg(
+                        "Error: Invalid Message Format After `cmd` usage: cmd \"/op <user to op>\""
+                            .to_string(),
+                    );
                 }
                 _ => {}
             }
@@ -146,9 +151,9 @@ impl Input {
                             continue;
                         }
                         return InputCode::InvalidMsg("Error: Too Many `-m` Flags usage: restart -m \"Restarting in 50 minutes...\" -t 3000".to_string());
-                    },
+                    }
                     InputFlag::Time(t) => {
-                        if time == 0 && t > 0{
+                        if time == 0 && t > 0 {
                             time = t;
                             continue;
                         }
@@ -158,17 +163,15 @@ impl Input {
             }
             if time > 0 && !message.is_empty() {
                 return InputCode::RestartWithMsgTime(message, time);
-            }
-            else if time > 0 {
-                return  InputCode::RestartWithTime(time);
-            }
-            else if !message.is_empty() {
+            } else if time > 0 {
+                return InputCode::RestartWithTime(time);
+            } else if !message.is_empty() {
                 return InputCode::RestartWithMsg(message);
             }
             return InputCode::Restart;
         }
         InputCode::Invalid
-    }   
+    }
 
     fn parse_msg(parts: &mut SplitWhitespace) -> Option<String> {
         let mut start = false;
@@ -179,7 +182,7 @@ impl Input {
             match parts.next() {
                 Some(part) => {
                     // siingle word message
-                    if part.starts_with('"') && part.ends_with('"'){
+                    if part.starts_with('"') && part.ends_with('"') {
                         let tmp_msg = <&str>::clone(&part).replace('"', "");
                         msg.push_str(format!("{} ", tmp_msg).as_str());
                         return Some(msg);
@@ -188,7 +191,7 @@ impl Input {
                     else if part.starts_with('"') {
                         start = true;
                         let tmp_msg = <&str>::clone(&part).replace('"', "");
-                        msg.push_str(format!("{} ", tmp_msg).as_str()); 
+                        msg.push_str(format!("{} ", tmp_msg).as_str());
                     }
                     // end message
                     else if start && part.ends_with('"') {
@@ -204,8 +207,8 @@ impl Input {
                     else {
                         return None;
                     }
-                },
-                None => return None
+                }
+                None => return None,
             }
         }
     }
@@ -222,22 +225,20 @@ pub enum InputCode {
     Invalid,
     InvalidMsg(String),
     Backup,
-    Cmd(String)
+    Cmd(String),
 }
 
 #[derive(PartialEq, Eq, Hash)]
 pub enum InputFlag {
     Time(u64),
-    Msg(String)
+    Msg(String),
 }
 
-impl InputFlag {
-    
-}
+impl InputFlag {}
 
 #[derive(Default, PartialEq, Eq)]
 pub enum InputCommand {
     Restart,
     #[default]
-    NoCommand
+    NoCommand,
 }

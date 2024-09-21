@@ -8,6 +8,7 @@ pub struct Config {
     pub server_start_file: String,
     pub server_folder: String,
     pub backup_file_name: String,
+    pub backup_time: String,
     pub java_args: Args,
     pub nogui: bool
 }

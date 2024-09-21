@@ -5,9 +5,7 @@ use input::Input;
 use process::Process;
 use rusty_time::Timer;
 use std::{
-    fs::remove_file,
-    thread,
-    time::{Duration, Instant},
+    fs::remove_file, thread, time::{Duration, Instant}
 };
 use tracing::{error, info, warn, Level};
 use tracing_subscriber::FmtSubscriber;
@@ -40,6 +38,10 @@ fn main() {
     tracing::subscriber::set_global_default(subscriber).expect("setting default subscriber failed");
 
     let config_data = Config::read("config/server_bounce_config.json");
+    let (hour, minute) = config_data.backup_time.split_at(3);
+    let (mut hour, minute) = (hour.to_string(), minute.to_string());
+    hour.remove(2);
+
 
     let mut instant = Instant::now();
 
@@ -99,6 +101,23 @@ fn main() {
                     // grab the current delta
                     let delta = instant.elapsed();
                     instant = Instant::now();
+
+                    let curr_hour = Local::now().format("%H").to_string();
+                    let curr_min = Local::now().format("%M").to_string().parse::<u8>().expect("Should be a valid u8");
+
+                    // println!("{} {}", curr_hour, hour);
+                    if curr_hour == hour {
+                        let min = match minute.parse::<u8>() {
+                            Ok(min) => min,
+                            Err(_) => panic!("backup_time config data is invalid. Use 24 hour time format."),
+                        };
+                        if min.abs_diff(curr_min) == 1 {
+                            child.say("Automatic server backup in 1 minute. Server will shutdown and may take ahwile to restart.".to_string());
+                            thread::sleep(Duration::from_secs(60));
+                            app_state = AppState::Backup;
+                            break 'restart;
+                        }
+                    }
 
                     // update the timer with the delta
                     reset_timer.tick(delta);
