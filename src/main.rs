@@ -27,6 +27,7 @@ pub enum AppState {
 
 fn main() {
     dotenv::dotenv().ok();
+    let (gmail, pass) = (dotenv::var("EMAILER_EMAIL").expect("EMAILER_EMAIL envar should exist"), dotenv::var("EMAILER_PASS").expect("EMAILER_PASS envar should exist"));
 
     // a builder for `FmtSubscriber`.
     let subscriber = FmtSubscriber::builder()
@@ -253,7 +254,7 @@ fn main() {
                             .body(String::from("Please fix thnx"))
                             .unwrap();
         
-                        let creds = Credentials::new("aarongraybill3@gmail.com".to_owned(), "xzbitnriwxdnhycf".to_owned());
+                        let creds = Credentials::new(gmail.clone(), pass.clone());
         
                         // Open a remote connection to gmail
                         let mailer = SmtpTransport::relay("smtp.gmail.com")
