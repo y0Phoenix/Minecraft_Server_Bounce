@@ -2,6 +2,7 @@ use backup::start_backup;
 use chrono::Local;
 use config::Config;
 use input::Input;
+use lettre::{message::header::ContentType, transport::smtp::authentication::Credentials, Message, SmtpTransport, Transport};
 use process::Process;
 use rusty_time::Timer;
 use std::{
@@ -42,6 +43,10 @@ fn main() {
     let (mut hour, minute) = (hour.to_string(), minute.to_string());
     hour.remove(2);
 
+    // let status = start_backup(&config_data.server_folder, &config_data.backup_file_name).unwrap();
+    // if status.code().unwrap() == 1 {
+    //     println!("yay");
+    // }
 
     let mut instant = Instant::now();
 
@@ -236,11 +241,60 @@ fn main() {
                             s.to_string()
                         );
                     }
+                    else if s.code().unwrap() == 1 {
+                        error!(
+                            "Failed to create and upload backup to Google Drive"
+                        );
+                        let email = Message::builder()
+                            .from("Aaron Graybill <aarongraybill3@gmail.com>".parse().unwrap())
+                            .to("Aaron Graybill <aarongraybill3@gmail.com>".parse().unwrap())
+                            .subject("Minecraft Server Backup Issue")
+                            .header(ContentType::TEXT_PLAIN)
+                            .body(String::from("Please fix thnx"))
+                            .unwrap();
+        
+                        let creds = Credentials::new("aarongraybill3@gmail.com".to_owned(), "xzbitnriwxdnhycf".to_owned());
+        
+                        // Open a remote connection to gmail
+                        let mailer = SmtpTransport::relay("smtp.gmail.com")
+                            .unwrap()
+                            .credentials(creds)
+                            .build();
+        
+                        // Send the email
+                        match mailer.send(&email) {
+                            Ok(_) => println!("Email sent successfully!"),
+                            Err(e) => panic!("Could not send email: {e:?}"),
+                        }
+                    }
                 }
-                Err(err) => error!(
-                    "Failed to create and upload backup to Google Drive: {}",
-                    err
-                ),
+                Err(err) => {
+                    error!(
+                        "Failed to create and upload backup to Google Drive: {}",
+                        err
+                    );
+                    let email = Message::builder()
+                        .from("Aaron Graybill <aarongraybill3@gmail.com>".parse().unwrap())
+                        .to("Aaron Graybill <aarongraybill3@gmail.com>".parse().unwrap())
+                        .subject("Minecraft Server Backup Issue")
+                        .header(ContentType::TEXT_PLAIN)
+                        .body(String::from("Please fix thnx"))
+                        .unwrap();
+
+                    let creds = Credentials::new("aarongraybill3@gmail.com".to_owned(), "xzbitnriwxdnhycf".to_owned());
+
+                    // Open a remote connection to gmail
+                    let mailer = SmtpTransport::relay("smtp.gmail.com")
+                        .unwrap()
+                        .credentials(creds)
+                        .build();
+
+                    // Send the email
+                    match mailer.send(&email) {
+                        Ok(_) => println!("Email sent successfully!"),
+                        Err(e) => panic!("Could not send email: {e:?}"),
+                    }
+                },
             }
         }
     }
